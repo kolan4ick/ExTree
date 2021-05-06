@@ -1,10 +1,15 @@
 package com.example.extree;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +62,12 @@ public class CalculatorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calculator, container, false);
+        View v = inflater.inflate(R.layout.fragment_calculator, container, false);
+        int height = Resources.getSystem().getDisplayMetrics().heightPixels;
+        int width = Resources.getSystem().getDisplayMetrics().widthPixels;
+        ((TextView) v.findViewById(R.id.textView)).setHeight((int) (height / 2.5));
+        ((TextView) v.findViewById(R.id.textView)).setWidth((int) (width / 1.2));
+//        ((TableLayout) v.findViewById(R.id.tableLayout)).setMinimumHeight((int) (height - (height / 2.5)));
+        return v;
     }
 }

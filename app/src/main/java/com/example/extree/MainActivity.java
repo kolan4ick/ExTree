@@ -9,7 +9,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -20,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
     }
@@ -37,5 +42,9 @@ public class MainActivity extends AppCompatActivity {
             BottomNavigationView bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation_view);
             NavigationUI.setupWithNavController(bottomNavigationView, navController);
         }
+    }
+
+    public void onButtonClick(View view) {
+        ((Button) view).setBackgroundColor(Color.BLUE);
     }
 }
