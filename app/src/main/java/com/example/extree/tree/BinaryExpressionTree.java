@@ -15,15 +15,23 @@ public class BinaryExpressionTree implements IExpression {
 
     /* Constructor for converting an expression (in string form) to a binary expression tree */
     public BinaryExpressionTree(String expression) {
-        BinaryExpressionTree tree = (BinaryExpressionTree) MakeBinaryExpressionTree(expression);
-        this.left = tree.left;
-        this.right = tree.right;
-        this.op = tree.op;
+        IExpression tree = MakeBinaryExpressionTree(expression);
+        if (tree instanceof Number) {
+            this.left = tree;
+            this.right = null;
+            this.op = null;
+        } else {
+            assert tree != null;
+            this.left = ((BinaryExpressionTree) tree).left;
+            this.right = ((BinaryExpressionTree) tree).right;
+            this.op = ((BinaryExpressionTree) tree).op;
+        }
     }
 
     /* Calculating the value of an expression (recursion) */
     @Override
     public Double Evaluate() {
+        if (op == null) return left.Evaluate();
         switch (op) {
             case '+':
                 return left.Evaluate() + right.Evaluate();
@@ -41,18 +49,21 @@ public class BinaryExpressionTree implements IExpression {
     /* Prefix form */
     @Override
     public String PreOrder() {
+        if (op == null) return left.PreOrder();
         return op + " " + left.PreOrder() + " " + right.PreOrder();
     }
 
     /* Infix form */
     @Override
     public String SymmetricOrder() {
+        if (op == null) return "(" + left.SymmetricOrder() + ")";
         return "( " + left.SymmetricOrder() + " " + op + " " + right.SymmetricOrder() + " )";
     }
 
     /* Postfix form */
     @Override
     public String PostOrder() {
+        if (op == null) return left.PostOrder();
         return left.PostOrder() + " " + right.PostOrder() + " " + op;
     }
 
@@ -77,35 +88,43 @@ public class BinaryExpressionTree implements IExpression {
 
     /* Method for checking the parentheses */
     private boolean CorrectBracketSequence(String expression) {
-        if (expression.length() == 0) return true;
+        if (expression.length() == 0) return false;
         boolean flag = false;
+        boolean wasNumberBetweenBrackets = true;
         int open = 0;
         for (int i = 0; i < expression.length(); i++) {
             if (expression.charAt(i) == '(')
                 open++;
-            else if (expression.charAt(i) == ')')
+            else if (expression.charAt(i) == ')') {
                 open--;
-            else
+                if (expression.charAt(i - 1) == '(') wasNumberBetweenBrackets = false;
+            } else
                 continue;
             if (open < 0)
                 flag = true;
         }
-        return !(flag || (open > 0));
+        return !(flag || (open > 0) || !wasNumberBetweenBrackets);
     }
 
     /* Method for converting a string expression into an array of objects */
     private ArrayList<Object> StringIntoTheArrayObject(String expression) {
         char[] expr = expression.replace(',', '.').toCharArray();
         StringBuilder num = new StringBuilder();
-        ArrayList<Object> arrayList = new ArrayList<Object>();
+        ArrayList<Object> arrayList = new ArrayList<>();
         for (int i = 0; i < expr.length; ++i) {
-            if (!((expr[i] >= 48 && expr[i] <= 57) || expr[i] == '.' || (i == 0 && expr[i] == '-') || (expr[i] == 'E' || expr[i] == 'e'))) {
-                if (num.length() > 0) arrayList.add(new Number(Double.parseDouble(num.toString())));
+            if (!((expr[i] >= 48 && expr[i] <= 57) || expr[i] == '.' || (i > 0 && expr[i] == '-' && !(expr[i - 1] >= 48 && expr[i - 1] <= 57)) || (expr[i] == 'E' || expr[i] == 'e'))) {
+                if (num.length() > 0) {
+                    arrayList.add(new Number(Double.parseDouble(num.toString())));
+                    if (arrayList.size() > 2 && arrayList.get(arrayList.size() - 1) instanceof IExpression && arrayList.get(arrayList.size() - 2) instanceof IExpression)
+                        arrayList.add(arrayList.size() - 1, '*');
+                }
                 arrayList.add(expr[i]);
                 if (arrayList.size() > 2 && (arrayList.get(arrayList.size() - 3).equals('(') && arrayList.get(arrayList.size() - 2) instanceof Number && arrayList.get(arrayList.size() - 1).equals(')'))) {
                     arrayList.remove(arrayList.size() - 3);
                     arrayList.remove(arrayList.size() - 1);
                 }
+                if (arrayList.size() > 2 && arrayList.get(arrayList.size() - 1) instanceof IExpression && arrayList.get(arrayList.size() - 2) instanceof IExpression)
+                    arrayList.add(arrayList.size() - 1, '*');
                 num = new StringBuilder();
             } else num.append(expr[i]);
         }
@@ -150,6 +169,7 @@ public class BinaryExpressionTree implements IExpression {
         }
         return (IExpression) arrayList.get(0);
     }
+
 
     /* Left Expression (may be Number or BinaryExpressionTree) */
     private final IExpression left;

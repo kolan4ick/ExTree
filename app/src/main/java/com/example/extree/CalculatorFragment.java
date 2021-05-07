@@ -1,5 +1,6 @@
 package com.example.extree;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -8,66 +9,110 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CalculatorFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.example.extree.tree.BinaryExpressionTree;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class CalculatorFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    /* ?? */
+    private View fragmentView;
+    /* ?? */
+    private final ArrayList<Character> operations = new ArrayList<>(Arrays.asList('+', '-', '*', '/', '^'));
+    /* ?? */
+    private Double result = 0.0;
 
     public CalculatorFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CalculatorFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CalculatorFragment newInstance(String param1, String param2) {
-        CalculatorFragment fragment = new CalculatorFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_calculator, container, false);
+        fragmentView = inflater.inflate(R.layout.fragment_calculator, container, false);
         int height = Resources.getSystem().getDisplayMetrics().heightPixels;
         int width = Resources.getSystem().getDisplayMetrics().widthPixels;
-        ((TextView) v.findViewById(R.id.textView)).setHeight((int) (height / 2.5));
-        ((TextView) v.findViewById(R.id.textView)).setWidth((int) (width / 1.2));
-//        ((TableLayout) v.findViewById(R.id.tableLayout)).setMinimumHeight((int) (height - (height / 2.5)));
-        return v;
+        ((TextView) fragmentView.findViewById(R.id.textView)).setHeight((int) (height / 2.5));
+        ((TextView) fragmentView.findViewById(R.id.textView)).setWidth((int) (width / 1.2));
+        return fragmentView;
+    }
+
+    /*
+        private void changeTextViewCalculator(TextView textView, String value) {
+        }
+    */
+    private boolean isNumber(char ch) {
+        return (ch >= 48 && ch <= 57);
+    }
+
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
+    public void onClickButtonCalculator(View view) {
+        Button pressedButton = (Button) view;
+        CharSequence pressedButtonText = pressedButton.getText();
+        TextView resultText = fragmentView.findViewById(R.id.textView);
+        switch (view.getId()) {
+            case R.id.buttonAllClear:
+                resultText.setText("0");
+                break;
+            case R.id.buttonErase:
+                if (!resultText.getText().toString().contains("="))
+                    if (resultText.length() == 1) resultText.setText("0");
+                    else
+                        resultText.setText(resultText.getText().subSequence(0, resultText.length() - 1));
+                break;
+            case R.id.buttonResult:
+                if (!resultText.getText().toString().contains("="))
+                    resultText.append("\n=" + (result = new BinaryExpressionTree(resultText.getText().toString()).Evaluate()).toString());
+                break;
+            case R.id.buttonGenerateTree:
+                break;
+            case R.id.buttonDot:
+                if (!resultText.getText().toString().contains("=")) {
+                    for (int i = resultText.length() - 1; i >= 0; --i) {
+                        if (resultText.getText().charAt(i) == '.') break;
+                        if (operations.contains(resultText.getText().charAt(i)) || i == 0) {
+                            resultText.append(".");
+                            break;
+                        }
+                    }
+                } else resultText.setText("0.");
+                break;
+            default:
+                if (!resultText.getText().toString().contains("=")) {
+                    if (operations.contains(pressedButtonText.charAt(0))) {
+                        if (operations.contains(resultText.getText().charAt(resultText.length() - 1)))
+                            resultText.setText(resultText.getText().subSequence(0, resultText.length() - 1));
+                        resultText.append(pressedButtonText);
+                    } else {
+                        if (resultText.length() == 1 && resultText.getText().charAt(0) == '0')
+                            resultText.setText(pressedButtonText);
+                        else
+                            resultText.append(pressedButtonText);
+                    }
+                } else {
+                    try {
+
+                        if (operations.contains(pressedButtonText.charAt(0))) {
+                            resultText.setText(result.toString());
+                            resultText.append(pressedButtonText);
+                        } else {
+                            resultText.setText(pressedButtonText);
+                        }
+                    } catch (Exception ex) {
+                        Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        }
+
     }
 }
