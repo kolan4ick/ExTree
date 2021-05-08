@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.extree.tree.BinaryExpressionTree;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +26,6 @@ public class CalculatorFragment extends Fragment {
     private final ArrayList<Character> operations = new ArrayList<>(Arrays.asList('+', '-', '*', '/', '^'));
     /* ?? */
     private Double result = 0.0;
-
     public CalculatorFragment() {
         // Required empty public constructor
     }
@@ -45,14 +45,6 @@ public class CalculatorFragment extends Fragment {
         ((TextView) fragmentView.findViewById(R.id.textView)).setHeight((int) (height / 2.5));
         ((TextView) fragmentView.findViewById(R.id.textView)).setWidth((int) (width / 1.2));
         return fragmentView;
-    }
-
-    /*
-        private void changeTextViewCalculator(TextView textView, String value) {
-        }
-    */
-    private boolean isNumber(char ch) {
-        return (ch >= 48 && ch <= 57);
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
@@ -113,6 +105,5 @@ public class CalculatorFragment extends Fragment {
                     }
                 }
         }
-
     }
 }

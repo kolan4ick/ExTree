@@ -8,10 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
@@ -51,10 +48,5 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         CalculatorFragment calculatorFragment = (CalculatorFragment) ((fm.getFragments().get(0)).getChildFragmentManager().getFragments().get(0));
         calculatorFragment.onClickButtonCalculator(view);
-//        try {
-//            Toast.makeText(getApplicationContext(), ((CalculatorFragment)fm.getFragments().get(0)).toString(), Toast.LENGTH_LONG).show();
-//        } catch (Exception e) {
-//            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-//        }
     }
 }
