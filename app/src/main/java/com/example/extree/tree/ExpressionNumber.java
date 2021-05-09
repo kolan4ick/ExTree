@@ -1,8 +1,8 @@
 package com.example.extree.tree;
 
-public class Number implements IExpression {
+public class ExpressionNumber implements IExpression {
     /* Main constructor */
-    Number(Double number) {
+    public ExpressionNumber(Double number) {
         this.number = number;
     }
 

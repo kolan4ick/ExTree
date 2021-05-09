@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".TreeFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TreeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!--    <com.example.extree.tree_draw.BinaryExpressionTreeView-->
+    <!--        android:id="@+id/bitree_view"-->
+    <!--        android:layout_width="10dp"-->
+    <!--        android:layout_height="10dp"-->
+    <!--        android:layout_marginTop="15dp" />-->
+    <com.example.extree.tree_draw.BinaryExpressionTreeView
+        android:id="@+id/binary_expression_tree_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

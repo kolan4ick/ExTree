@@ -2,69 +2,53 @@ package com.example.extree.tree;
 
 import java.util.ArrayList;
 
-import static java.lang.Math.pow;
-
 /* Class for binary expression trees */
-public class BinaryExpressionTree implements IExpression {
+public class BinaryExpressionTree {
     /* Main constructor */
     public BinaryExpressionTree(IExpression left, IExpression right, char op) {
-        this.left = left;
-        this.right = right;
-        this.op = op;
+        this.root = new ExpressionNode(left, right, op);
     }
 
     /* Constructor for converting an expression (in string form) to a binary expression tree */
     public BinaryExpressionTree(String expression) {
         IExpression tree = MakeBinaryExpressionTree(expression);
-        if (tree instanceof Number) {
-            this.left = tree;
-            this.right = null;
-            this.op = null;
+        if (tree instanceof ExpressionNumber) {
+            this.root = new ExpressionNumber(((ExpressionNumber) tree).number);
         } else {
             assert tree != null;
-            this.left = ((BinaryExpressionTree) tree).left;
-            this.right = ((BinaryExpressionTree) tree).right;
-            this.op = ((BinaryExpressionTree) tree).op;
+            this.root = new ExpressionNode(((ExpressionNode) tree).getLeft(), ((ExpressionNode) tree).getRight(), ((ExpressionNode) tree).getOp());
         }
     }
 
-    /* Calculating the value of an expression (recursion) */
-    @Override
+    /* Getter root value */
+    public IExpression getRoot() {
+        return root;
+    }
+
+    /* Method for calculating height of tree graph (how deep is it) */
+    public int Height() {
+        if (root instanceof ExpressionNumber) return 0;
+        else return ((ExpressionNode) root).Height();
+    }
+
+    /* Calculating the value of an expression */
     public Double Evaluate() {
-        if (op == null) return left.Evaluate();
-        switch (op) {
-            case '+':
-                return left.Evaluate() + right.Evaluate();
-            case '-':
-                return left.Evaluate() - right.Evaluate();
-            case '*':
-                return left.Evaluate() * right.Evaluate();
-            case '/':
-                return left.Evaluate() / right.Evaluate();
-            default:
-                return pow(left.Evaluate(), right.Evaluate());
-        }
+        return root.Evaluate();
     }
 
     /* Prefix form */
-    @Override
     public String PreOrder() {
-        if (op == null) return left.PreOrder();
-        return op + " " + left.PreOrder() + " " + right.PreOrder();
+        return root.PreOrder();
     }
 
     /* Infix form */
-    @Override
     public String SymmetricOrder() {
-        if (op == null) return "(" + left.SymmetricOrder() + ")";
-        return "( " + left.SymmetricOrder() + " " + op + " " + right.SymmetricOrder() + " )";
+        return root.SymmetricOrder();
     }
 
     /* Postfix form */
-    @Override
     public String PostOrder() {
-        if (op == null) return left.PostOrder();
-        return left.PostOrder() + " " + right.PostOrder() + " " + op;
+        return root.PostOrder();
     }
 
     /* Method for checking if there is a no better way to create a tree for addition and subtraction */
@@ -103,7 +87,7 @@ public class BinaryExpressionTree implements IExpression {
             if (open < 0)
                 flag = true;
         }
-        return !(flag || (open > 0) || !wasNumberBetweenBrackets);
+        return flag || (open > 0) || !wasNumberBetweenBrackets;
     }
 
     /* Method for converting a string expression into an array of objects */
@@ -112,14 +96,14 @@ public class BinaryExpressionTree implements IExpression {
         StringBuilder num = new StringBuilder();
         ArrayList<Object> arrayList = new ArrayList<>();
         for (int i = 0; i < expr.length; ++i) {
-            if (!((expr[i] >= 48 && expr[i] <= 57) || expr[i] == '.' || (i > 0 && expr[i] == '-' && !(expr[i - 1] >= 48 && expr[i - 1] <= 57)) || (expr[i] == 'E' || expr[i] == 'e'))) {
+            if (!((expr[i] >= 48 && expr[i] <= 57) || expr[i] == '.' || (i > 0 && expr[i] == '-' && expr[i - 1] == '(') || (expr[i] == 'E' || expr[i] == 'e'))) {
                 if (num.length() > 0) {
-                    arrayList.add(new Number(Double.parseDouble(num.toString())));
+                    arrayList.add(new ExpressionNumber(Double.parseDouble(num.toString())));
                     if (arrayList.size() > 2 && arrayList.get(arrayList.size() - 1) instanceof IExpression && arrayList.get(arrayList.size() - 2) instanceof IExpression)
                         arrayList.add(arrayList.size() - 1, '*');
                 }
                 arrayList.add(expr[i]);
-                if (arrayList.size() > 2 && (arrayList.get(arrayList.size() - 3).equals('(') && arrayList.get(arrayList.size() - 2) instanceof Number && arrayList.get(arrayList.size() - 1).equals(')'))) {
+                if (arrayList.size() > 2 && (arrayList.get(arrayList.size() - 3).equals('(') && arrayList.get(arrayList.size() - 2) instanceof ExpressionNumber && arrayList.get(arrayList.size() - 1).equals(')'))) {
                     arrayList.remove(arrayList.size() - 3);
                     arrayList.remove(arrayList.size() - 1);
                 }
@@ -132,8 +116,8 @@ public class BinaryExpressionTree implements IExpression {
     }
 
     /* Method for creating a binary expression tree */
-    private void CreateBinaryExpressionTree(ArrayList<Object> arrayList, int index) {
-        arrayList.set(index, new BinaryExpressionTree((IExpression) arrayList.get(index - 1), (IExpression) arrayList.get(index + 1), (Character) arrayList.get(index)));
+    private void CreateExpressionNode(ArrayList<Object> arrayList, int index) {
+        arrayList.set(index, new ExpressionNode((IExpression) arrayList.get(index - 1), (IExpression) arrayList.get(index + 1), (Character) arrayList.get(index)));
         arrayList.remove(index - 1);
         arrayList.remove(index);
         if (arrayList.get(index - 2).equals('(') && arrayList.get(index).equals(')')) {
@@ -144,7 +128,10 @@ public class BinaryExpressionTree implements IExpression {
 
     /* Main method for creating binary expression tree from string expression */
     private IExpression MakeBinaryExpressionTree(String expression) {
-        if (!CorrectBracketSequence(expression)) return null;
+        if (CorrectBracketSequence(expression)) {
+            if (CorrectBracketSequence(expression + ")")) return null;
+            else expression += ")";
+        }
         expression = "(" + expression;
         expression += ")";
         ArrayList<Object> arrayList = StringIntoTheArrayObject(expression);
@@ -152,17 +139,17 @@ public class BinaryExpressionTree implements IExpression {
         while (arrayList.size() > 1) {
             if (i >= arrayList.size()) i = 0;
             if (arrayList.get(i).equals('^') && HasNoBetterVariantForExponentiation(arrayList, i)) {
-                CreateBinaryExpressionTree(arrayList, i);
+                CreateExpressionNode(arrayList, i);
                 i--;
             }
             if (arrayList.size() > 1)
                 if ((arrayList.get(i).equals('*') || arrayList.get(i).equals('/')) && HasNoBetterVariantForMultiplicationDivision(arrayList, i)) {
-                    CreateBinaryExpressionTree(arrayList, i);
+                    CreateExpressionNode(arrayList, i);
                     i--;
                 }
             if (arrayList.size() > 1)
                 if ((arrayList.get(i).equals('+') || arrayList.get(i).equals('-')) && HasNoBetterVariantForAdditionSubtraction(arrayList, i)) {
-                    CreateBinaryExpressionTree(arrayList, i);
+                    CreateExpressionNode(arrayList, i);
                     i--;
                 }
             i++;
@@ -170,11 +157,6 @@ public class BinaryExpressionTree implements IExpression {
         return (IExpression) arrayList.get(0);
     }
 
-
-    /* Left Expression (may be Number or BinaryExpressionTree) */
-    private final IExpression left;
-    /* Right Expression (may be Number or BinaryExpressionTree) */
-    private final IExpression right;
-    /* Operation (may be: ['+', '-', '*', '/', '^']) */
-    private final Character op;
+    /* Root element of graph, may be ExpressionNode and ExpressionNumber (because tree may contains just one element) */
+    public IExpression root;
 }

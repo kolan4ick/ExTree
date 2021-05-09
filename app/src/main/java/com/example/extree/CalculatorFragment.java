@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.extree.tree.BinaryExpressionTree;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.extree.tree_draw.BinaryExpressionTreeView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,10 +26,10 @@ public class CalculatorFragment extends Fragment {
     private final ArrayList<Character> operations = new ArrayList<>(Arrays.asList('+', '-', '*', '/', '^'));
     /* ?? */
     private Double result = 0.0;
+
     public CalculatorFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
