@@ -213,7 +213,7 @@ public class BinaryExpressionTreeView extends View {
     private static final int STATE_POST_ORDER_TRAVERSAL = 3;
     private static final int STATE_LEVEL_TRAVERSAL = 4;
     private float mScaleFactor = 1.f;
-    private int state = STATE_NORMAL;
+    private final int state = STATE_NORMAL;
 
     private int mCircleRadius;
     private int xGap;
@@ -227,7 +227,7 @@ public class BinaryExpressionTreeView extends View {
 
     private int mWidth;
     private int mHeight;
-    private ScaleGestureDetector mScaleDetector;
+    private final ScaleGestureDetector mScaleDetector;
     private Paint mLinePaint;
     private Paint mCircleFillPaint;
     private Paint mCircleStrokePaint;

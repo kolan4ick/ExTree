@@ -337,7 +337,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="35dp"
         android:background="@drawable/highlighted_round_button"
-        android:onClick="onClickButtonCalculator"
+        android:onClick="onClickButtonGenerateTreeCalculator"
         android:text="@string/makeTree"
         android:textColor="@color/white"
         android:textSize="20sp"

@@ -5,6 +5,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +25,7 @@ import java.util.Arrays;
 public class CalculatorFragment extends Fragment {
     /* ?? */
     private View fragmentView;
+    private ItemViewModel viewModel;
     /* ?? */
     private final ArrayList<Character> operations = new ArrayList<>(Arrays.asList('+', '-', '*', '/', '^'));
     /* ?? */
@@ -30,6 +34,7 @@ public class CalculatorFragment extends Fragment {
     public CalculatorFragment() {
         // Required empty public constructor
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,14 @@ public class CalculatorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_calculator, container, false);
+
+        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+
+        if (viewModel.getDataCalculatorResultValue() != null) {
+            ((TextView) (fragmentView.findViewById(R.id.textView))).setText(viewModel.getDataCalculatorResultValue());
+            result = viewModel.getDataCalculatorResultDoubleValue();
+        }
+
         int height = Resources.getSystem().getDisplayMetrics().heightPixels;
         int width = Resources.getSystem().getDisplayMetrics().widthPixels;
         ((TextView) fragmentView.findViewById(R.id.textView)).setHeight((int) (height / 2.5));
@@ -63,10 +76,11 @@ public class CalculatorFragment extends Fragment {
                         resultText.setText(resultText.getText().subSequence(0, resultText.length() - 1));
                 break;
             case R.id.buttonResult:
-                if (!resultText.getText().toString().contains("="))
-                    resultText.append("\n=" + (result = new BinaryExpressionTree(resultText.getText().toString()).Evaluate()).toString());
-                break;
-            case R.id.buttonGenerateTree:
+                if (!resultText.getText().toString().contains("=")) {
+                    BinaryExpressionTree binaryExpressionTree = new BinaryExpressionTree(resultText.getText().toString());
+                    resultText.append("\n=" + (result = binaryExpressionTree.Evaluate()).toString());
+                    viewModel.setDataBinaryExpressionTreeValue(binaryExpressionTree);
+                }
                 break;
             case R.id.buttonDot:
                 if (!resultText.getText().toString().contains("=")) {
@@ -105,5 +119,7 @@ public class CalculatorFragment extends Fragment {
                     }
                 }
         }
+        viewModel.setDataCalculatorResultValue(resultText.getText().toString());
+        viewModel.setDataCalculatorResultDoubleValue(result);
     }
 }
