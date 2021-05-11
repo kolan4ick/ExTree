@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        viewModel.setDataMenuHeightValue(findViewById(R.id.activity_main_bottom_navigation_view).getHeight());
         prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
     }
 
@@ -69,5 +69,11 @@ public class MainActivity extends AppCompatActivity {
             viewModel.setDataBinaryExpressionTreeValue(new BinaryExpressionTree(resultText));
         NavController navigation = Navigation.findNavController(findViewById(R.id.activity_main_nav_host_fragment));
         navigation.navigate(R.id.treeFragment);
+    }
+
+    public void onClickButtonTree(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        TreeFragment treeFragment = (TreeFragment) ((fm.getFragments().get(0)).getChildFragmentManager().getFragments().get(0));
+        treeFragment.onClickButtonTree(view);
     }
 }

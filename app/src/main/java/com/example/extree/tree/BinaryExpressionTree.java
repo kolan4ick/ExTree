@@ -28,7 +28,7 @@ public class BinaryExpressionTree {
     /* Method for calculating height of tree graph (how deep is it) */
     public int Height() {
         if (root instanceof ExpressionNumber) return 0;
-        else return ((ExpressionNode) root).Height();
+        else return root.Height();
     }
 
     /* Calculating the value of an expression */
@@ -157,6 +157,11 @@ public class BinaryExpressionTree {
         return (IExpression) arrayList.get(0);
     }
 
+    public int getNodeCount() {
+        if (root instanceof ExpressionNumber) return 1;
+        return root.Count();
+    }
+
     /* Root element of graph, may be ExpressionNode and ExpressionNumber (because tree may contains just one element) */
-    public IExpression root;
+    private IExpression root;
 }

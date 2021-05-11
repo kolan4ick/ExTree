@@ -30,6 +30,16 @@ public class ExpressionNumber implements IExpression {
         return number.toString();
     }
 
+    @Override
+    public int Count() {
+        return 0;
+    }
+
+    @Override
+    public int Height() {
+        return 0;
+    }
+
     /* Number */
     public Double number;
 }

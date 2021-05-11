@@ -10,10 +10,44 @@
     <!--        android:layout_width="10dp"-->
     <!--        android:layout_height="10dp"-->
     <!--        android:layout_marginTop="15dp" />-->
+
     <com.example.extree.tree_draw.BinaryExpressionTreeView
         android:id="@+id/binary_expression_tree_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center" />
+        android:layout_height="511dp"
+        android:layout_gravity="center|top" />
+
+    <LinearLayout
+        android:id="@+id/tree_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bitree_view"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_pre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickButtonTree"
+            android:text="前序遍历" />
+
+        <Button
+            android:id="@+id/btn_in"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickButtonTree"
+            android:text="中序遍历" />
+
+        <Button
+            android:id="@+id/btn_post"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickButtonTree"
+            android:text="后序遍历" />
+    </LinearLayout>
 
 </FrameLayout>

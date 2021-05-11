@@ -1,7 +1,7 @@
 package com.example.extree.tree_draw;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -11,15 +11,18 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
+
+import android.annotation.SuppressLint;
+import android.view.ScaleGestureDetector;
 
 import com.example.extree.R;
 import com.example.extree.tree.BinaryExpressionTree;
 import com.example.extree.tree.ExpressionNode;
 import com.example.extree.tree.ExpressionNumber;
+import com.example.extree.tree.IExpression;
 
-public class BinaryExpressionTreeView extends View {
+public class BinaryExpressionTreeView extends View implements Animator.AnimatorListener {
     /* Main constructor */
     public BinaryExpressionTreeView(Context context) {
         this(context, null);
@@ -42,23 +45,86 @@ public class BinaryExpressionTreeView extends View {
         this.binaryExpressionTree = binaryExpressionTree;
     }
 
+    /* Method for initializing main values */
+    private void init(AttributeSet attrs) {
+
+        commonColor = getResources().getColor(R.color.app_common_color);
+        traversalColor = getResources().getColor(R.color.home_nav_sort_color);
+        topAndBottomOffset = getResources().getDimensionPixelOffset(R.dimen.bitree_top_bottom_offset);
+
+        if (attrs != null) {
+            Resources res = getResources();
+            TypedArray ta = res.obtainAttributes(attrs, R.styleable.BinaryExpressionTreeView);
+            mCircleRadius = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_circle_radius, res.getDimensionPixelSize(R.dimen.bitree_radius_default));
+            xGap = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_x_gap, res.getDimensionPixelSize(R.dimen.bitree_x_gap_default));
+            yGap = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_y_gap, res.getDimensionPixelSize(R.dimen.bitree_y_gap_default));
+            textSize = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_text_size, res.getDimensionPixelSize(R.dimen.bitree_text_size_default));
+        }
+
+        initPaint();
+        initAnimator();
+    }
+
+    /* Method for initializing main values for animation */
+    private void initAnimator() {
+        mValueAnimator = ValueAnimator.ofInt(0, 255);
+        mValueAnimator.setDuration(800);
+        mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                alpha = (int) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        mValueAnimator.addListener(this);
+    }
+
+    /* Method for initializing main values for painting */
+    private void initPaint() {
+        mLinePaint = new Paint();
+        mLinePaint.setStyle(Paint.Style.STROKE);
+        mLinePaint.setStrokeWidth(2);
+        mLinePaint.setAntiAlias(true);
+        mLinePaint.setColor(getResources().getColor(R.color.app_common_color));
+
+        mCircleFillPaint = new Paint();
+        mCircleFillPaint.setStyle(Paint.Style.FILL);
+        mCircleFillPaint.setColor(getResources().getColor(R.color.app_common_color));
+
+        mCircleStrokePaint = new Paint();
+        mCircleStrokePaint.setStyle(Paint.Style.STROKE);
+        mCircleStrokePaint.setStrokeWidth(2);
+        mCircleStrokePaint.setAntiAlias(true);
+        mCircleStrokePaint.setColor(getResources().getColor(R.color.dark_blue));
+        mCircleStrokePaint.setStrokeCap(Paint.Cap.ROUND);
+
+        mTextPaint = new Paint();
+        mTextPaint.setColor(getResources().getColor(R.color.text_color_white));
+        mTextPaint.setTextSize(textSize);
+    }
+
     /* Main method of View extended class. Drawing the graph */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.save();
         canvas.scale(mScaleFactor, mScaleFactor);
-
         if (binaryExpressionTree == null) {
             return;
         }
-        canvas.drawColor(Color.WHITE);
         drawTree(canvas, binaryExpressionTree, mWidth / 2, mCircleRadius + topAndBottomOffset);
-        canvas.restore();
+        step = 0;
+        if (state == STATE_PRE_ORDER_TRAVERSAL) {
+            preOrderTraversal(canvas, binaryExpressionTree.getRoot(), mWidth / 2, mCircleRadius + topAndBottomOffset, 0, 0);
+        } else if (state == STATE_IN_ORDER_TRAVERSAL) {
+            inOrderTraversal(canvas, binaryExpressionTree.getRoot(), mWidth / 2, mCircleRadius + topAndBottomOffset, 0, 0);
+        } else if (state == STATE_POST_ORDER_TRAVERSAL) {
+            postOrderTraversal(canvas, binaryExpressionTree.getRoot(), mWidth / 2, mCircleRadius + topAndBottomOffset, 0, 0);
+        }
     }
 
     /* Main drawing-tree method */
     private void drawTree(Canvas canvas, BinaryExpressionTree binaryExpressionTree, int x, int y) {
+        mCircleFillPaint.setColor(commonColor);
         if (binaryExpressionTree.getRoot() instanceof ExpressionNumber)
             drawNumber(canvas, (ExpressionNumber) binaryExpressionTree.getRoot(), x, y, 0, 0);
         else drawNode(canvas, (ExpressionNode) binaryExpressionTree.getRoot(), x, y, 0, 0);
@@ -102,17 +168,29 @@ public class BinaryExpressionTreeView extends View {
         }
     }
 
+    /* Method for drawing lines for connection nodes */
+    private void drawLine(Canvas canvas, int px, int py, int x, int y) {
+        mLinePaint.setColor(commonColor);
+
+        int difX = x - px;
+        int difY = y - py;
+        int distance = (int) Math.sqrt(Math.pow(difX, 2) + Math.pow(difY, 2));
+        int offsetX = difX * mCircleRadius / distance;
+        int offsetY = difY * mCircleRadius / distance;
+        canvas.drawLine(px + offsetX, py + offsetY, x - offsetX, y - offsetY, mLinePaint);
+    }
+
     /* Method for automatic selection of view size */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (binaryExpressionTree != null) {
             int treeHeight = binaryExpressionTree.Height();
-            int maxLeafCount = (int) Math.pow(2, treeHeight + 1);
+            int maxLeafCount = (int) Math.pow(2, treeHeight);
             mWidth = mCircleRadius * 2 * maxLeafCount + 2 * xGap * (maxLeafCount + 1);
-
-            mHeight = mCircleRadius * 2 * treeHeight + yGap * (treeHeight + 2) + 2 * topAndBottomOffset;
-
+            mHeight = mCircleRadius * 2 * treeHeight + yGap * (treeHeight - 1) + 2 * topAndBottomOffset;
+            mWidth = Math.max(mWidth, minimumViewWidth);
+            mHeight = Math.max(mHeight, minimumViewHeight);
             setMeasuredDimension(mWidth, mHeight);
         }
     }
@@ -152,9 +230,197 @@ public class BinaryExpressionTreeView extends View {
         }
     }
 
-    /* Method for drawing lines for connection nodes */
-    private void drawLine(Canvas canvas, int px, int py, int x, int y) {
-        mLinePaint.setColor(commonColor);
+    /* Event listener animation starting */
+    @Override
+    public void onAnimationStart(Animator animation) {
+    }
+
+    /* Event listener animation ending */
+    @Override
+    public void onAnimationEnd(Animator animation) {
+        if (mAnimEndListener != null) {
+            mAnimEndListener.animEnd(this);
+        }
+
+    }
+
+    /* Event listener animation canceling */
+    @Override
+    public void onAnimationCancel(Animator animation) {
+
+    }
+
+    /* Event listener animation repeating */
+    @Override
+    public void onAnimationRepeat(Animator animation) {
+
+    }
+
+    /* Setter for animEndListener */
+    public void setAnimEndListener(AnimEndListener animEndListener) {
+        mAnimEndListener = animEndListener;
+    }
+
+
+    public void Next() {
+        int count = binaryExpressionTree.getNodeCount();
+        if (stepLimit > count) {
+            return;
+        }
+        stepLimit++;
+        mValueAnimator.start();
+    }
+
+    /* Setter for animation duration */
+    public void setAnimDuring(int during) {
+        mValueAnimator.setDuration(during);
+    }
+
+    /* Getter stepLimit */
+    public int getStepLimit() {
+        return stepLimit;
+    }
+
+    /* Method for begin prefix tree traversal */
+    public void beginPreOrderTraversal() {
+        stepLimit = 1;
+        state = STATE_PRE_ORDER_TRAVERSAL;
+        mValueAnimator.start();
+
+    }
+
+    /* Method for begin infix tree traversal */
+    public void beginInOrderTraversal() {
+        stepLimit = 1;
+        state = STATE_IN_ORDER_TRAVERSAL;
+        mValueAnimator.start();
+
+    }
+
+    /* Method for begin postfix tree traversal */
+    public void beginPostOrderTraversal() {
+        stepLimit = 1;
+        state = STATE_POST_ORDER_TRAVERSAL;
+        mValueAnimator.start();
+
+    }
+
+    /* Method for animated prefix tree traversal */
+    private void preOrderTraversal(Canvas canvas, IExpression expression, int x, int y, int parentX, int parentY) {
+        if (step >= stepLimit) {
+            return;
+        }
+        if (parentX != 0 && parentY != 0) {
+            traversalLine(canvas, parentX, parentY, x, y);
+        }
+        int xOffset = (int) Math.pow(2, (expression.Height() - 1)) * (mCircleRadius + xGap);
+        int yOffset = yGap + (mCircleRadius * 2);
+        if (expression instanceof ExpressionNode) {
+            mCircleFillPaint.setColor(traversalColor);
+            if (step == stepLimit - 1) {
+                mCircleFillPaint.setAlpha(alpha);
+            } else {
+                mCircleFillPaint.setAlpha(255);
+            }
+            canvas.drawCircle(x, y, mCircleRadius, mCircleFillPaint);
+            canvas.drawCircle(x, y, mCircleRadius, mCircleStrokePaint);
+            String text = ((ExpressionNode) expression).getOp().toString();
+            Rect rect = new Rect();
+            mTextPaint.getTextBounds(text, 0, text.length(), rect);
+            canvas.drawText(text, x - rect.width() / 2, y + rect.height() / 2, mTextPaint);
+        } else traversalNumber(canvas, ((ExpressionNumber) expression), x, y, parentX, parentY);
+        step++;
+
+        if (expression instanceof ExpressionNode) {
+            if (((ExpressionNode) expression).getLeft() != null) {
+                preOrderTraversal(canvas, ((ExpressionNode) expression).getLeft(), x - xOffset, y + yOffset, x, y);
+            }
+
+            if (((ExpressionNode) expression).getRight() != null) {
+                preOrderTraversal(canvas, ((ExpressionNode) expression).getRight(), x + xOffset, y + yOffset, x, y);
+            }
+        }
+    }
+
+    /* Method for animated infix tree traversal */
+    private void inOrderTraversal(Canvas canvas, IExpression expression, int x, int y, int parentX, int parentY) {
+        int xOffset = (int) Math.pow(2, (expression.Height() - 1)) * (mCircleRadius + xGap);
+        int yOffset = yGap + (mCircleRadius * 2);
+        if (expression instanceof ExpressionNode) {
+            if (((ExpressionNode) expression).getLeft() != null) {
+                inOrderTraversal(canvas, ((ExpressionNode) expression).getLeft(), x - xOffset, y + yOffset, x, y);
+            }
+        }
+        if (step >= stepLimit) {
+            return;
+        }
+        if (parentX != 0 && parentY != 0) {
+            traversalLine(canvas, parentX, parentY, x, y);
+        }
+        if (expression instanceof ExpressionNode) {
+            mCircleFillPaint.setColor(traversalColor);
+            if (step == stepLimit - 1) {
+                mCircleFillPaint.setAlpha(alpha);
+            } else {
+                mCircleFillPaint.setAlpha(255);
+            }
+            canvas.drawCircle(x, y, mCircleRadius, mCircleFillPaint);
+            canvas.drawCircle(x, y, mCircleRadius, mCircleStrokePaint);
+            String text = ((ExpressionNode) expression).getOp().toString();
+            Rect rect = new Rect();
+            mTextPaint.getTextBounds(text, 0, text.length(), rect);
+            canvas.drawText(text, x - rect.width() / 2, y + rect.height() / 2, mTextPaint);
+        } else traversalNumber(canvas, ((ExpressionNumber) expression), x, y, parentX, parentY);
+        step++;
+        if (expression instanceof ExpressionNode) {
+            if (((ExpressionNode) expression).getRight() != null) {
+                inOrderTraversal(canvas, ((ExpressionNode) expression).getRight(), x + xOffset, y + yOffset, x, y);
+            }
+        }
+    }
+
+    /* Method for animated postfix tree traversal */
+    private void postOrderTraversal(Canvas canvas, IExpression expression, int x, int y, int parentX, int parentY) {
+
+        int xOffset = (int) Math.pow(2, (expression.Height() - 1)) * (mCircleRadius + xGap);
+        int yOffset = yGap + (mCircleRadius * 2);
+        if (expression instanceof ExpressionNode) {
+            if (((ExpressionNode) expression).getLeft() != null) {
+                postOrderTraversal(canvas, ((ExpressionNode) expression).getLeft(), x - xOffset, y + yOffset, x, y);
+            }
+
+            if (((ExpressionNode) expression).getRight() != null) {
+                postOrderTraversal(canvas, ((ExpressionNode) expression).getRight(), x + xOffset, y + yOffset, x, y);
+            }
+        }
+        if (step >= stepLimit) {
+            return;
+        }
+        if (parentX != 0 && parentY != 0) {
+            traversalLine(canvas, parentX, parentY, x, y);
+        }
+        if (expression instanceof ExpressionNode) {
+            mCircleFillPaint.setColor(traversalColor);
+            if (step == stepLimit - 1) {
+                mCircleFillPaint.setAlpha(alpha);
+            } else {
+                mCircleFillPaint.setAlpha(255);
+            }
+            canvas.drawCircle(x, y, mCircleRadius, mCircleFillPaint);
+            canvas.drawCircle(x, y, mCircleRadius, mCircleStrokePaint);
+            String text = ((ExpressionNode) expression).getOp().toString();
+            Rect rect = new Rect();
+            mTextPaint.getTextBounds(text, 0, text.length(), rect);
+            canvas.drawText(text, x - rect.width() / 2, y + rect.height() / 2, mTextPaint);
+        } else {
+            traversalNumber(canvas, ((ExpressionNumber) expression), x, y, parentX, parentY);
+        }
+        step++;
+    }
+
+    /* Method for animated line traversal */
+    private void traversalLine(Canvas canvas, int px, int py, int x, int y) {
+        mLinePaint.setColor(traversalColor);
 
         int difX = x - px;
         int difY = y - py;
@@ -162,87 +428,82 @@ public class BinaryExpressionTreeView extends View {
         int offsetX = difX * mCircleRadius / distance;
         int offsetY = difY * mCircleRadius / distance;
         canvas.drawLine(px + offsetX, py + offsetY, x - offsetX, y - offsetY, mLinePaint);
+
     }
 
-    /* Method for initializing main values */
-    private void init(AttributeSet attrs) {
-
-        commonColor = getResources().getColor(R.color.app_common_color);
-        traversalColor = getResources().getColor(R.color.home_nav_sort_color);
-        topAndBottomOffset = getResources().getDimensionPixelOffset(R.dimen.bitree_top_bottom_offset);
-
-        if (attrs != null) {
-            Resources res = getResources();
-            TypedArray ta = res.obtainAttributes(attrs, R.styleable.BinaryExpressionTreeView);
-            mCircleRadius = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_circle_radius, res.getDimensionPixelSize(R.dimen.bitree_radius_default));
-            xGap = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_x_gap, res.getDimensionPixelSize(R.dimen.bitree_x_gap_default));
-            yGap = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_y_gap, res.getDimensionPixelSize(R.dimen.bitree_y_gap_default));
-            textSize = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_text_size, res.getDimensionPixelSize(R.dimen.bitree_text_size_default));
+    /* Method for animated number traversal */
+    private void traversalNumber(Canvas canvas, ExpressionNumber expressionNumber, int x, int y, int parentX, int parentY) {
+        mCircleFillPaint.setColor(traversalColor);
+        if (step == stepLimit - 1) {
+            mCircleFillPaint.setAlpha(alpha);
+        } else {
+            mCircleFillPaint.setAlpha(255);
         }
+        canvas.drawCircle(x, y, mCircleRadius, mCircleFillPaint);
+        canvas.drawCircle(x, y, mCircleRadius, mCircleStrokePaint);
 
-        initPaint();
+        String text = expressionNumber.number.toString();
+        Rect rect = new Rect();
+        mTextPaint.getTextBounds(text, 0, text.length(), rect);
+        canvas.drawText(text, x - rect.width() / 2, y + rect.height() / 2, mTextPaint);
     }
 
-    /* Method for initializing main values for painting */
-    private void initPaint() {
-        mLinePaint = new Paint();
-        mLinePaint.setStyle(Paint.Style.STROKE);
-        mLinePaint.setStrokeWidth(2);
-        mLinePaint.setAntiAlias(true);
-        mLinePaint.setColor(getResources().getColor(R.color.app_common_color));
-
-        mCircleFillPaint = new Paint();
-        mCircleFillPaint.setStyle(Paint.Style.FILL);
-        mCircleFillPaint.setColor(getResources().getColor(R.color.app_common_color));
-
-        mCircleStrokePaint = new Paint();
-        mCircleStrokePaint.setStyle(Paint.Style.STROKE);
-        mCircleStrokePaint.setStrokeWidth(2);
-        mCircleStrokePaint.setAntiAlias(true);
-        mCircleStrokePaint.setColor(getResources().getColor(R.color.dark_blue));
-        mCircleStrokePaint.setStrokeCap(Paint.Cap.ROUND);
-
-        mTextPaint = new Paint();
-        mTextPaint.setColor(getResources().getColor(R.color.text_color_white));
-        mTextPaint.setTextSize(textSize);
-    }
-
+    /* Normal state used for a simple tree image */
     private static final int STATE_NORMAL = -1;
+    /* Pre order traversal state used for animated prefix tree traversal */
     private static final int STATE_PRE_ORDER_TRAVERSAL = 1;
+    /* In order traversal state used for animated infix tree traversal */
     private static final int STATE_IN_ORDER_TRAVERSAL = 2;
+    /* Post order traversal state used for animated postfix tree traversal */
     private static final int STATE_POST_ORDER_TRAVERSAL = 3;
-    private static final int STATE_LEVEL_TRAVERSAL = 4;
+    /* Scale factor for scale view */
     private float mScaleFactor = 1.f;
-    private final int state = STATE_NORMAL;
-
+    /* Variable that contains information about the current state */
+    private int state = STATE_NORMAL;
+    /* Radius of node image */
     private int mCircleRadius;
+    /* Width of tree image */
     private int xGap;
+    /* Height of tree image */
     private int yGap;
+    /* Top and bottom offset */
     private int topAndBottomOffset;
-
+    /* Variable for AnimEndListener */
+    private AnimEndListener mAnimEndListener;
+    /* Size of node operation and number text */
     private int textSize;
-
+    /* Default color for image (not animated) */
     private int commonColor;
+    /* Default color for image (animated) */
     private int traversalColor;
-
+    /* Width of view */
     private int mWidth;
+    /* Height of view */
     private int mHeight;
+    /* ScaleGestureDetector for gestural scaling */
     private final ScaleGestureDetector mScaleDetector;
+    /* Paint of line */
     private Paint mLinePaint;
+    /* Paint of node or number circle */
     private Paint mCircleFillPaint;
+    /* Paint of node or number edging circle */
     private Paint mCircleStrokePaint;
+    /* Paint of text */
     private Paint mTextPaint;
-
+    /* Value of animator */
     private ValueAnimator mValueAnimator;
+    /* Alpha used in animation */
     private int alpha;
-
-//    private AnimEndListener mAnimEndListener;
-
+    /* Height of phone screen used for normal reflection tree */
+    private final int minimumViewHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+    /* Width of phone screen used for normal reflection tree */
+    private final int minimumViewWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+    /* Variable contains x last x coordinate for move the view */
     private int lastX;
     /* Tree value */
     private BinaryExpressionTree binaryExpressionTree;
-
+    /* Step of animation */
     private int step;
-
+    /* Maximum value of step in animation */
     private int stepLimit;
 }

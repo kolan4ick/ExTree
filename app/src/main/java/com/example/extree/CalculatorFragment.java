@@ -25,6 +25,7 @@ import java.util.Arrays;
 public class CalculatorFragment extends Fragment {
     /* ?? */
     private View fragmentView;
+    /* ?? */
     private ItemViewModel viewModel;
     /* ?? */
     private final ArrayList<Character> operations = new ArrayList<>(Arrays.asList('+', '-', '*', '/', '^'));

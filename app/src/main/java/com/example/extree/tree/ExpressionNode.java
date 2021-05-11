@@ -26,6 +26,7 @@ public class ExpressionNode implements IExpression {
     }
 
     /* Method for calculating height of tree graph (how deep is it) */
+    @Override
     public int Height() {
         return Height(this);
     }
@@ -35,7 +36,7 @@ public class ExpressionNode implements IExpression {
         if (root == null) {
             return 0;
         }
-        if (root instanceof ExpressionNumber) return 0;
+        if (root instanceof ExpressionNumber) return root.Height();
         int left = Height(((ExpressionNode) root).getLeft());
         int right = Height(((ExpressionNode) root).getRight());
         return left > right ? left + 1 : right + 1;
@@ -80,6 +81,12 @@ public class ExpressionNode implements IExpression {
     public String PostOrder() {
         if (op == null) return left.PostOrder();
         return left.PostOrder() + " " + right.PostOrder() + " " + op;
+    }
+
+    /* Method for get node count */
+    @Override
+    public int Count() {
+        return 2 + left.Count() + right.Count();
     }
 
     /* Left Expression (may be Number or BinaryExpressionTree) */

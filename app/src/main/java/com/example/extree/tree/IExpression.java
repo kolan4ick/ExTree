@@ -9,4 +9,8 @@ public interface IExpression {
     String SymmetricOrder();
 
     String PostOrder();
+
+    int Count();
+
+    int Height();
 }
