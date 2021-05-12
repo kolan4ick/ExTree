@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        viewModel.setDataMenuHeightValue(findViewById(R.id.activity_main_bottom_navigation_view).getHeight());
         prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
     }
 

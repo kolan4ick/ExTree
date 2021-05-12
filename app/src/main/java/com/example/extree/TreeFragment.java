@@ -11,6 +11,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.extree.tree_draw.AnimEndListener;
 import com.example.extree.tree_draw.BinaryExpressionTreeView;
@@ -64,6 +65,9 @@ public class TreeFragment extends Fragment implements AnimEndListener {
 
             case R.id.btn_post:
                 binaryExpressionTreeView.beginPostOrderTraversal();
+                break;
+            case R.id.btn_clear:
+                binaryExpressionTreeView.beginClear();
                 break;
         }
     }

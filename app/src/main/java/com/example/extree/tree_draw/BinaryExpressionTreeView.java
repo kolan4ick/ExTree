@@ -16,6 +16,7 @@ import android.view.View;
 import android.annotation.SuppressLint;
 import android.view.ScaleGestureDetector;
 
+import com.example.extree.ItemViewModel;
 import com.example.extree.R;
 import com.example.extree.tree.BinaryExpressionTree;
 import com.example.extree.tree.ExpressionNode;
@@ -54,7 +55,7 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
 
         if (attrs != null) {
             Resources res = getResources();
-            TypedArray ta = res.obtainAttributes(attrs, R.styleable.BinaryExpressionTreeView);
+            @SuppressLint("Recycle") TypedArray ta = res.obtainAttributes(attrs, R.styleable.BinaryExpressionTreeView);
             mCircleRadius = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_circle_radius, res.getDimensionPixelSize(R.dimen.bitree_radius_default));
             xGap = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_x_gap, res.getDimensionPixelSize(R.dimen.bitree_x_gap_default));
             yGap = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_y_gap, res.getDimensionPixelSize(R.dimen.bitree_y_gap_default));
@@ -111,9 +112,10 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
         if (binaryExpressionTree == null) {
             return;
         }
-        drawTree(canvas, binaryExpressionTree, mWidth / 2, mCircleRadius + topAndBottomOffset);
         step = 0;
-        if (state == STATE_PRE_ORDER_TRAVERSAL) {
+        if (state == STATE_NORMAL)
+            drawTree(canvas, binaryExpressionTree, mWidth / 2, mCircleRadius + topAndBottomOffset);
+        else if (state == STATE_PRE_ORDER_TRAVERSAL) {
             preOrderTraversal(canvas, binaryExpressionTree.getRoot(), mWidth / 2, mCircleRadius + topAndBottomOffset, 0, 0);
         } else if (state == STATE_IN_ORDER_TRAVERSAL) {
             inOrderTraversal(canvas, binaryExpressionTree.getRoot(), mWidth / 2, mCircleRadius + topAndBottomOffset, 0, 0);
@@ -188,9 +190,8 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
             int treeHeight = binaryExpressionTree.Height();
             int maxLeafCount = (int) Math.pow(2, treeHeight);
             mWidth = mCircleRadius * 2 * maxLeafCount + 2 * xGap * (maxLeafCount + 1);
-            mHeight = mCircleRadius * 2 * treeHeight + yGap * (treeHeight - 1) + 2 * topAndBottomOffset;
             mWidth = Math.max(mWidth, minimumViewWidth);
-            mHeight = Math.max(mHeight, minimumViewHeight);
+            mHeight = minimumViewHeight - 63 * 3;
             setMeasuredDimension(mWidth, mHeight);
         }
     }
@@ -303,6 +304,11 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
         state = STATE_POST_ORDER_TRAVERSAL;
         mValueAnimator.start();
 
+    }
+
+    public void beginClear() {
+        state = STATE_NORMAL;
+        this.invalidate();
     }
 
     /* Method for animated prefix tree traversal */
