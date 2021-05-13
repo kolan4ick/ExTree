@@ -17,12 +17,15 @@ import com.example.extree.tree_draw.AnimEndListener;
 import com.example.extree.tree_draw.BinaryExpressionTreeView;
 
 public class TreeFragment extends Fragment implements AnimEndListener {
+    /* This view */
     private View fragmentView;
+    /* Expression tree for build the tree */
     private BinaryExpressionTreeView binaryExpressionTreeView;
+    /* ItemViewModel for connection between fragments */
     private ItemViewModel viewModel;
     private static final int MSG_UPDATE_TRAVERSAL = 1;
     @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

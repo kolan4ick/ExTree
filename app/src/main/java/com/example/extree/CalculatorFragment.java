@@ -1,14 +1,15 @@
 package com.example.extree;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +17,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.extree.database.CalculatorModel;
 import com.example.extree.tree.BinaryExpressionTree;
-import com.example.extree.tree_draw.BinaryExpressionTreeView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CalculatorFragment extends Fragment {
-    /* ?? */
+    /* This view */
     private View fragmentView;
-    /* ?? */
+    /* ItemViewModel for connection between fragments */
     private ItemViewModel viewModel;
-    /* ?? */
+    /* Possible operations */
     private final ArrayList<Character> operations = new ArrayList<>(Arrays.asList('+', '-', '*', '/', '^'));
-    /* ?? */
+    /* Result of expression */
     private Double result = 0.0;
 
     public CalculatorFragment() {
@@ -58,6 +59,7 @@ public class CalculatorFragment extends Fragment {
         int width = Resources.getSystem().getDisplayMetrics().widthPixels;
         ((TextView) fragmentView.findViewById(R.id.textView)).setHeight((int) (height / 2.5));
         ((TextView) fragmentView.findViewById(R.id.textView)).setWidth((int) (width / 1.2));
+        ((TextView) fragmentView.findViewById(R.id.textView)).setMovementMethod(new ScrollingMovementMethod());
         return fragmentView;
     }
 
@@ -79,8 +81,11 @@ public class CalculatorFragment extends Fragment {
             case R.id.buttonResult:
                 if (!resultText.getText().toString().contains("=")) {
                     BinaryExpressionTree binaryExpressionTree = new BinaryExpressionTree(resultText.getText().toString());
+                    String expression = resultText.getText().toString();
                     resultText.append("\n=" + (result = binaryExpressionTree.Evaluate()).toString());
                     viewModel.setDataBinaryExpressionTreeValue(binaryExpressionTree);
+                    Boolean insert = viewModel.getDataBaseHelperValue().addOne(new CalculatorModel(expression, resultText.getText().toString(), result));
+                    Toast.makeText(getContext(), insert.toString(), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.buttonDot:

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_border"
         android:gravity="bottom|right"
+        android:scrollbars="vertical"
         android:text="@string/resultTextView"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"

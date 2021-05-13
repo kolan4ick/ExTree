@@ -163,5 +163,5 @@ public class BinaryExpressionTree {
     }
 
     /* Root element of graph, may be ExpressionNode and ExpressionNumber (because tree may contains just one element) */
-    private IExpression root;
+    private final IExpression root;
 }

@@ -4,32 +4,31 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavGraph;
-import androidx.navigation.NavGraphNavigator;
-import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.extree.database.DatabaseHelper;
 import com.example.extree.tree.BinaryExpressionTree;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+
 public class MainActivity extends AppCompatActivity {
-    SharedPreferences prefs = null;
+    /* For store and tracking first launching of program */
+    private SharedPreferences prefs = null;
+    /* ItemViewModel for connection between fragments */
     private ItemViewModel viewModel;
+    /* For access and store database */
+    private DatabaseHelper dbHelper;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -39,12 +38,13 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
+        dbHelper = new DatabaseHelper(this.getBaseContext());
+        viewModel.setDataBaseHelperValue(dbHelper);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         if (prefs.getBoolean("firstrun", true)) {
             Intent intent = new Intent(MainActivity.this, InfoActivity.class);
             startActivity(intent);
@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
             NavController navController = Navigation.findNavController(this, R.id.activity_main_nav_host_fragment);
             BottomNavigationView bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation_view);
             NavigationUI.setupWithNavController(bottomNavigationView, navController);
+            viewModel.setDataMenuHeightValue(bottomNavigationView.getHeight());
+            viewModel.setDataNavControllerValue(navController);
         }
     }
 

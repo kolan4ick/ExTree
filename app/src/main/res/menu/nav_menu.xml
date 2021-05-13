@@ -7,7 +7,8 @@
     <item
             android:id="@+id/treeFragment"
             android:icon="@drawable/tree"
-            android:title="Tree"/>
+            android:title="Tree"
+        />
 
     <item
             android:id="@+id/historyFragment"

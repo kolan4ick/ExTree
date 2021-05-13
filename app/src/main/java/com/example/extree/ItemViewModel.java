@@ -2,7 +2,9 @@ package com.example.extree;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.navigation.NavController;
 
+import com.example.extree.database.DatabaseHelper;
 import com.example.extree.tree.BinaryExpressionTree;
 
 public class ItemViewModel extends ViewModel {
@@ -14,6 +16,8 @@ public class ItemViewModel extends ViewModel {
     private final MutableLiveData<BinaryExpressionTree> dataBinaryExpressionTree;
     /* Previous Height of Menu (used in other parts of BottomNavigationView) */
     private final MutableLiveData<Integer> dataMenuHeight;
+    private final MutableLiveData<DatabaseHelper> dataBaseHelper;
+    private final MutableLiveData<NavController> dataNavController;
 
     /* Main constructor */
     public ItemViewModel() {
@@ -21,6 +25,8 @@ public class ItemViewModel extends ViewModel {
         dataCalculatorResultDouble = new MutableLiveData<>();
         dataBinaryExpressionTree = new MutableLiveData<>();
         dataMenuHeight = new MutableLiveData<>();
+        dataBaseHelper = new MutableLiveData<>();
+        this.dataNavController = new MutableLiveData<>();
     }
 
     /* Getter of dataCalculatorResult */
@@ -81,6 +87,31 @@ public class ItemViewModel extends ViewModel {
     /* Setter of dataMenuHeightValue */
     public void setDataMenuHeightValue(Integer value) {
         dataMenuHeight.setValue(value);
+    }
+
+    public MutableLiveData<DatabaseHelper> getDataBaseHelper() {
+        return dataBaseHelper;
+    }
+
+    public DatabaseHelper getDataBaseHelperValue() {
+        return dataBaseHelper.getValue();
+    }
+
+    public void setDataBaseHelperValue(DatabaseHelper value) {
+        dataBaseHelper.setValue(value);
+    }
+
+    /* Getter of dataNavController */
+    public MutableLiveData<NavController> getDataNavController() {
+        return dataNavController;
+    }
+
+    public NavController getDataNavControllerValue() {
+        return dataNavController.getValue();
+    }
+
+    public void setDataNavControllerValue(NavController value) {
+        dataNavController.setValue(value);
     }
 
 }
