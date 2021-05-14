@@ -54,5 +54,6 @@
             android:layout_weight="1"
             android:onClick="onClickButtonTree"
             android:text="Clear all" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

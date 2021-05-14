@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_settings_settings_fragment"
+        android:icon="@drawable/calculator"
+        android:title="Settings" />
+    <item
+        android:id="@+id/nav_settings_about_fragment"
+        android:icon="@drawable/calculator"
+        android:title="About" />
+</menu>

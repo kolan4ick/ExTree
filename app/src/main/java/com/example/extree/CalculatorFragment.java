@@ -8,14 +8,18 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.extree.database.CalculatorModel;
 import com.example.extree.tree.BinaryExpressionTree;
@@ -60,6 +64,17 @@ public class CalculatorFragment extends Fragment {
         ((TextView) fragmentView.findViewById(R.id.textView)).setHeight((int) (height / 2.5));
         ((TextView) fragmentView.findViewById(R.id.textView)).setWidth((int) (width / 1.2));
         ((TextView) fragmentView.findViewById(R.id.textView)).setMovementMethod(new ScrollingMovementMethod());
+        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) fragmentView.findViewById(R.id.toolbarCalculator);
+        /* Adding action after click on Settings item in menu */
+        toolbar.getMenu().getItem(0).setOnMenuItemClickListener(item -> {
+            viewModel.getDataNavControllerValue().navigate(R.id.settingsFragment);
+            return true;
+        });
+        /* Adding action after click on About item in menu */
+        toolbar.getMenu().getItem(1).setOnMenuItemClickListener(item -> {
+            viewModel.getDataNavControllerValue().navigate(R.id.aboutFragment);
+            return true;
+        });
         return fragmentView;
     }
 
