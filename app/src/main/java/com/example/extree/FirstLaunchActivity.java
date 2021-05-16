@@ -3,7 +3,7 @@ package com.example.extree;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class InfoActivity extends AppCompatActivity {
+public class FirstLaunchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

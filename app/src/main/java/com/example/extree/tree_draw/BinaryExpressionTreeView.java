@@ -3,6 +3,7 @@ package com.example.extree.tree_draw;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -15,6 +16,8 @@ import android.view.View;
 
 import android.annotation.SuppressLint;
 import android.view.ScaleGestureDetector;
+
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.extree.ItemViewModel;
 import com.example.extree.R;
@@ -38,7 +41,7 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
     public BinaryExpressionTreeView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mScaleDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
-        init(attrs);
+        init();
     }
 
     /* Setter binaryExpressionTree value */
@@ -46,21 +49,22 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
         this.binaryExpressionTree = binaryExpressionTree;
     }
 
+    /* Method for converting dp to pixels */
+    public static int pxFromDp(final Context context, final int dp) {
+        return (int) (dp * context.getResources().getDisplayMetrics().density);
+    }
+
     /* Method for initializing main values */
-    private void init(AttributeSet attrs) {
+    private void init() {
 
         commonColor = getResources().getColor(R.color.app_common_color);
         traversalColor = getResources().getColor(R.color.home_nav_sort_color);
-        topAndBottomOffset = getResources().getDimensionPixelOffset(R.dimen.bitree_top_bottom_offset);
 
-        if (attrs != null) {
-            Resources res = getResources();
-            @SuppressLint("Recycle") TypedArray ta = res.obtainAttributes(attrs, R.styleable.BinaryExpressionTreeView);
-            mCircleRadius = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_circle_radius, res.getDimensionPixelSize(R.dimen.bitree_radius_default));
-            xGap = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_x_gap, res.getDimensionPixelSize(R.dimen.bitree_x_gap_default));
-            yGap = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_y_gap, res.getDimensionPixelSize(R.dimen.bitree_y_gap_default));
-            textSize = ta.getDimensionPixelSize(R.styleable.BinaryExpressionTreeView_text_size, res.getDimensionPixelSize(R.dimen.bitree_text_size_default));
-        }
+        textSize = pxFromDp(getContext(), prefs.getInt("fontSizeSettingsValue", 14));
+        mCircleRadius = pxFromDp(getContext(), prefs.getInt("circleRadiusSettingsValue", 24));
+        topAndBottomOffset = pxFromDp(getContext(), prefs.getInt("topAndBottomOffsetSettingsValue", 25));
+        xGap = pxFromDp(getContext(), prefs.getInt("widthSettingsValue", 14));
+        yGap = pxFromDp(getContext(), prefs.getInt("heightSettingsValue", 14));
 
         initPaint();
         initAnimator();
@@ -69,7 +73,7 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
     /* Method for initializing main values for animation */
     private void initAnimator() {
         mValueAnimator = ValueAnimator.ofInt(0, 255);
-        mValueAnimator.setDuration(800);
+        mValueAnimator.setDuration((int) (800 / (double)prefs.getFloat("animationDurationSettingsValue", 1f)));
         mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -100,7 +104,7 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
         mCircleStrokePaint.setStrokeCap(Paint.Cap.ROUND);
 
         mTextPaint = new Paint();
-        mTextPaint.setColor(getResources().getColor(R.color.text_color_white));
+        mTextPaint.setColor(getResources().getColor(R.color.TextColor));
         mTextPaint.setTextSize(textSize);
     }
 
@@ -113,9 +117,13 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
             return;
         }
         step = 0;
-        if (state == STATE_NORMAL)
+        if (state == STATE_NORMAL) {
             drawTree(canvas, binaryExpressionTree, mWidth / 2, mCircleRadius + topAndBottomOffset);
-        else if (state == STATE_PRE_ORDER_TRAVERSAL) {
+            if (firstLaunch) {
+                layout(-(mWidth / 2) + (minimumViewWidth / 2), getTop(), (mWidth / 2) + (minimumViewWidth / 2), getBottom());
+                firstLaunch = !firstLaunch;
+            }
+        } else if (state == STATE_PRE_ORDER_TRAVERSAL) {
             preOrderTraversal(canvas, binaryExpressionTree.getRoot(), mWidth / 2, mCircleRadius + topAndBottomOffset, 0, 0);
         } else if (state == STATE_IN_ORDER_TRAVERSAL) {
             inOrderTraversal(canvas, binaryExpressionTree.getRoot(), mWidth / 2, mCircleRadius + topAndBottomOffset, 0, 0);
@@ -190,7 +198,7 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
             int treeHeight = binaryExpressionTree.Height();
             int maxLeafCount = (int) Math.pow(2, treeHeight);
             mWidth = mCircleRadius * 2 * maxLeafCount + 2 * xGap * (maxLeafCount + 1);
-            mWidth = Math.max(mWidth, minimumViewWidth);
+            mWidth = Math.max(mWidth, minimumViewWidth) * 6;
             mHeight = minimumViewHeight - 63 * 3;
             setMeasuredDimension(mWidth, mHeight);
         }
@@ -512,4 +520,7 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
     private int step;
     /* Maximum value of step in animation */
     private int stepLimit;
+    private boolean firstLaunch = true;
+    /* Shared preferences for parameters of tree */
+    private final SharedPreferences prefs = getContext().getSharedPreferences("com.example.extree", Context.MODE_PRIVATE);
 }

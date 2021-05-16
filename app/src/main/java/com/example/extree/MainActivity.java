@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.example.extree.database.DatabaseHelper;
 import com.example.extree.tree.BinaryExpressionTree;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        prefs = getSharedPreferences("com.mycompany.myAppName", MODE_PRIVATE);
+        prefs = getSharedPreferences("com.example.extree", MODE_PRIVATE);
         dbHelper = new DatabaseHelper(this.getBaseContext());
         viewModel.setDataBaseHelperValue(dbHelper);
     }
@@ -46,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (prefs.getBoolean("firstrun", true)) {
-            Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+            Intent intent = new Intent(MainActivity.this, FirstLaunchActivity.class);
             startActivity(intent);
-            prefs.edit().putBoolean("firstrun", false).commit();
+            prefs.edit().putBoolean("firstrun", false).apply();
         } else {
             NavController navController = Navigation.findNavController(this, R.id.activity_main_nav_host_fragment);
             BottomNavigationView bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation_view);

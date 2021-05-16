@@ -1,4 +1,4 @@
-package com.example.extree.tree_draw;
+package com.example.extree;
 
 import android.app.Activity;
 import android.content.Context;

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExTree">
         <activity
-            android:name=".InfoActivity"
+            android:name=".FirstLaunchActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".MainActivity"
