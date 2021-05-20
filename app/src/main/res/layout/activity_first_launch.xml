@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewInstructions"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/first_launch_bg"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    tools:context=".FirstLaunchActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        tools:context=".InstructionsFragment">
+
+        <TextView
+            android:id="@+id/first_launch_title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/crimson_pro_bold"
+            android:text="Welcome to ExTree!"
+            android:textAlignment="center"
+            android:textColor="@color/text_color_white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/first_launch_body_text_view_part_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/crimson_pro_normal"
+            android:text=""
+            android:textColor="@color/text_color_white"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/first_launch_title_text_view"
+            tools:ignore="HardcodedText"
+            tools:layout_editor_absoluteX="-9dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_start_first_launch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button_with_tint"
+            android:fontFamily="@font/crimson_pro_bold"
+            android:text="Start"
+            android:textColor="@color/text_color_white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/first_launch_body_text_view_part_one" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

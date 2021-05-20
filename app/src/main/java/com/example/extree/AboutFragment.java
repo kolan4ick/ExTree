@@ -3,6 +3,7 @@ package com.example.extree;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,14 +28,16 @@ public class AboutFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_about, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
-        Toolbar toolbar = (Toolbar) fragmentView.findViewById(R.id.toolbarSettings);
+        Toolbar toolbar = fragmentView.findViewById(R.id.toolbarSettings);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setNavigationOnClickListener(v -> viewModel.getDataNavControllerValue().popBackStack());
         TextView textView = fragmentView.findViewById(R.id.about_body_text_view);
-        textView.setText(BuildConfig.VERSION_NAME);
+        textView.setText("Version\n" + BuildConfig.VERSION_NAME);
+        AppCompatButton btn = fragmentView.findViewById(R.id.buttonGoToInstructions);
+        btn.setOnClickListener(v -> viewModel.getDataNavControllerValue().navigate(R.id.instructionsFragment));
         return fragmentView;
     }
 }

@@ -11,7 +11,8 @@
         android:theme="@style/Theme.ExTree">
         <activity
             android:name=".FirstLaunchActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Extree.FirstLaunch" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">

@@ -7,7 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.widget.ScrollView;
 
-public class HistoryScrollView extends ScrollView {
+public class ScrollViewOverBottomMenu extends ScrollView {
     private Context mContext;
     private int heightOfMenu;
 
@@ -15,22 +15,22 @@ public class HistoryScrollView extends ScrollView {
         this.heightOfMenu = heightOfMenu;
     }
 
-    public HistoryScrollView(Context context) {
+    public ScrollViewOverBottomMenu(Context context) {
         super(context);
         init(context);
     }
 
-    public HistoryScrollView(Context context, AttributeSet attrs) {
+    public ScrollViewOverBottomMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public HistoryScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ScrollViewOverBottomMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
-    public HistoryScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ScrollViewOverBottomMenu(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
     }

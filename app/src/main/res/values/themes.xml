@@ -15,8 +15,20 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorButtonNormal">#1a237e</item>
-        <item name="colorControlHighlight">#673ab7</item>
+        <item name="colorControlHighlight">#c9a142</item>
         <!--        <item name="android:stateListAnimator">@animator/button_elevation</item>-->
+    </style>
 
+    <style name="Theme.Extree.FirstLaunch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <!--        <item name="android:windowCloseOnTouchOutside">true</item>-->
     </style>
 </resources>

@@ -8,10 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="TextColor">#FFFFFFFF</color>
-    <color name="BackgroundColor">#FF000000</color>
+    <color name="BackgroundColor">#222223</color>
     <color name="LightDark">#9e988a</color>
     <color name="dark_blue">#028FEA</color>
     <color name="text_color_white">#ffffff</color>
     <color name="app_common_color">#3CB3FF</color>
     <color name="home_nav_sort_color">#FF9F60</color>
+    <color name="highlighted_color">#c9a142</color>
+    <color name="first_launch_background">#978d76</color>
 </resources>

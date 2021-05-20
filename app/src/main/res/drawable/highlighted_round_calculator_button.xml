@@ -13,7 +13,7 @@
 
     <item android:id="@android:id/background">
         <shape>
-            <solid android:color="#c9a142" />
+            <solid android:color="@color/highlighted_color" />
             <size
                 android:width="60dp"
                 android:height="60dp" />

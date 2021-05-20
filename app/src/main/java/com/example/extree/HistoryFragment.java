@@ -1,6 +1,5 @@
 package com.example.extree;
 
-import android.annotation.SuppressLint;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -26,7 +25,7 @@ public class HistoryFragment extends Fragment {
     /* ItemViewModel for connection between fragments */
     private ItemViewModel viewModel;
     /* For access to HistoryScrollView */
-    private HistoryScrollView historyScrollView;
+    private ScrollViewOverBottomMenu scrollViewOverBottomMenu;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -43,15 +42,11 @@ public class HistoryFragment extends Fragment {
         btn.setTag("buttonHistory_" + ID.toString());
         btn.setText(result);
         btn.setTextSize(20);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("RestrictedApi")
-            @Override
-            public void onClick(View v) {
-                viewModel.setDataBinaryExpressionTreeValue(new BinaryExpressionTree(expression));
-                viewModel.setDataCalculatorResultValue(expression);
-                viewModel.setDataCalculatorResultDoubleValue(resultDoulbe);
-                viewModel.getDataNavControllerValue().popBackStack();
-            }
+        btn.setOnClickListener(v -> {
+            viewModel.setDataBinaryExpressionTreeValue(new BinaryExpressionTree(expression));
+            viewModel.setDataCalculatorResultValue(expression);
+            viewModel.setDataCalculatorResultDoubleValue(resultDoulbe);
+            viewModel.getDataNavControllerValue().popBackStack();
         });
         return btn;
     }
@@ -66,13 +61,9 @@ public class HistoryFragment extends Fragment {
         Toast.makeText(getContext(), db.toString(), Toast.LENGTH_SHORT).show();
         List<CalculatorModel> elements = viewModel.getDataBaseHelperValue().getEveryone();
         LinearLayout linearLayout = fragmentView.findViewById(R.id.linear_elements_layout);
-        historyScrollView = fragmentView.findViewById(R.id.scrollable_history);
-        historyScrollView.post(new Runnable() {
-            public void run() {
-                historyScrollView.scrollTo(0, historyScrollView.getBottom());
-            }
-        });
-        historyScrollView.setHeightOfMenu(viewModel.getDataMenuHeightValue());
+        scrollViewOverBottomMenu = fragmentView.findViewById(R.id.scrollable_history);
+        scrollViewOverBottomMenu.post(() -> scrollViewOverBottomMenu.scrollTo(0, scrollViewOverBottomMenu.getBottom()));
+        scrollViewOverBottomMenu.setHeightOfMenu(viewModel.getDataMenuHeightValue());
         for (int i = 0; i < elements.size(); i++) {
             linearLayout.addView(createButton(elements.get(i).getCalculatorID(), elements.get(i).getResultString(), elements.get(i).getExpression(), elements.get(i).getResultDouble()));
         }
