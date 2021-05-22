@@ -6,6 +6,8 @@ import androidx.navigation.NavController;
 
 import com.example.extree.database.DatabaseHelper;
 import com.example.extree.tree.BinaryExpressionTree;
+import com.google.android.material.bottomnavigation.BottomNavigationMenu;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ItemViewModel extends ViewModel {
     /* Previous String result of calculator (used for saving state of calculator when moving to other parts of BottomNavigationView) */
@@ -15,17 +17,19 @@ public class ItemViewModel extends ViewModel {
     /* Previous BinaryExpressionTree result of calculator (used for saving state of calculator when moving to other parts of BottomNavigationView) */
     private final MutableLiveData<BinaryExpressionTree> dataBinaryExpressionTree;
     /* Previous Height of Menu (used in other parts of BottomNavigationView) */
-    private final MutableLiveData<Integer> dataMenuHeight;
+    private final MutableLiveData<BottomNavigationView> dataMenu;
     private final MutableLiveData<DatabaseHelper> dataBaseHelper;
     private final MutableLiveData<NavController> dataNavController;
+    private final MutableLiveData<Integer> dataMenuHeight;
 
     /* Main constructor */
     public ItemViewModel() {
         dataCalculatorResult = new MutableLiveData<>();
         dataCalculatorResultDouble = new MutableLiveData<>();
         dataBinaryExpressionTree = new MutableLiveData<>();
-        dataMenuHeight = new MutableLiveData<>();
+        dataMenu = new MutableLiveData<>();
         dataBaseHelper = new MutableLiveData<>();
+        dataMenuHeight = new MutableLiveData<>();
         this.dataNavController = new MutableLiveData<>();
     }
 
@@ -75,18 +79,18 @@ public class ItemViewModel extends ViewModel {
     }
 
     /* Getter of dataMenuHeight */
-    public MutableLiveData<Integer> getDataMenuHeight() {
-        return dataMenuHeight;
+    public MutableLiveData<BottomNavigationView> getDataMenu() {
+        return dataMenu;
     }
 
     /* Getter of dataMenuHeightValue */
-    public Integer getDataMenuHeightValue() {
-        return dataMenuHeight.getValue();
+    public BottomNavigationView getDataMenuValue() {
+        return dataMenu.getValue();
     }
 
     /* Setter of dataMenuHeightValue */
-    public void setDataMenuHeightValue(Integer value) {
-        dataMenuHeight.setValue(value);
+    public void setDataMenuValue(BottomNavigationView value) {
+        dataMenu.setValue(value);
     }
 
     public MutableLiveData<DatabaseHelper> getDataBaseHelper() {
@@ -108,6 +112,18 @@ public class ItemViewModel extends ViewModel {
 
     public NavController getDataNavControllerValue() {
         return dataNavController.getValue();
+    }
+
+    public MutableLiveData<Integer> getDataMenuHeight() {
+        return dataMenuHeight;
+    }
+
+    public Integer getDataMenuHeightValue() {
+        return dataMenuHeight.getValue();
+    }
+
+    public void setDataMenuHeightValue(Integer value) {
+        dataMenuHeight.setValue(value);
     }
 
     public void setDataNavControllerValue(NavController value) {

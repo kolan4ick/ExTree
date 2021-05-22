@@ -1,6 +1,7 @@
 package com.example.extree;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,7 +17,11 @@ import android.widget.LinearLayout;
 import com.example.extree.tree_draw.AnimEndListener;
 import com.example.extree.tree_draw.BinaryExpressionTreeView;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class TreeFragment extends Fragment implements AnimEndListener {
+    /* For store variables */
+    SharedPreferences sharedPreferences;
     /* This view */
     private View fragmentView;
     /* Expression tree for build the tree */
@@ -45,11 +50,14 @@ public class TreeFragment extends Fragment implements AnimEndListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         fragmentView = inflater.inflate(R.layout.fragment_tree, container, false);
+        sharedPreferences = getActivity().getSharedPreferences("com.example.extree", MODE_PRIVATE);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
         if (viewModel.getDataCalculatorResultValue() != null) {
             binaryExpressionTreeView = fragmentView.findViewById(R.id.binary_expression_tree_view);
             binaryExpressionTreeView.setBinaryExpressionTree(viewModel.getDataBinaryExpressionTreeValue());
+            binaryExpressionTreeView.setmHeightOfMenu(viewModel.getDataMenuHeightValue());
             binaryExpressionTreeView.setAnimEndListener(this);
         }
         return fragmentView;

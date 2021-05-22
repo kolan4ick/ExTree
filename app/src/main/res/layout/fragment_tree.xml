@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <com.example.extree.tree_draw.BinaryExpressionTreeView
         android:id="@+id/binary_expression_tree_view"
         android:layout_width="0dp"
@@ -15,45 +14,56 @@
 
     <LinearLayout
         android:id="@+id/tree_linear_layout"
-        android:layout_width="0dp"
-        android:layout_height="62dp"
-        android:layout_gravity="bottom|center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_marginBottom="75dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/binary_expression_tree_view">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_pre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/highlighted_round_calculator_button"
             android:onClick="onClickButtonTree"
-            android:text="Pre order" />
+            android:text="Pre order"
+            android:textSize="9sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_in"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
+            android:background="@drawable/highlighted_round_calculator_button"
             android:onClick="onClickButtonTree"
-            android:text="In order" />
+            android:text="In order"
+            android:textSize="9sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_post"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
+            android:background="@drawable/highlighted_round_calculator_button"
             android:onClick="onClickButtonTree"
-            android:text="Post order" />
+            android:text="Post order"
+            android:textSize="9sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_clear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
+            android:background="@drawable/highlighted_round_calculator_button"
             android:onClick="onClickButtonTree"
-            android:text="Clear all" />
+            android:text="Clear all"
+            android:textSize="9sp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -65,7 +65,7 @@ public class SettingsFragment extends Fragment {
         List<Float> animationDurations = new ArrayList<>();
         Collections.addAll(animationDurations, 0.5f, 0.75f, 1.0f, 1.25f, 1.5f, 1.75f, 2.0f, 2.5f, 3.0f);
 
-        Spinner spinnerFontSize = (Spinner) fragmentView.findViewById(R.id.spinner_font_size);
+        Spinner spinnerFontSize = fragmentView.findViewById(R.id.spinner_font_size);
         ArrayAdapter<Integer> dataFontSizesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, fontSizes);
         dataFontSizesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFontSize.setAdapter(dataFontSizesAdapter);
@@ -84,7 +84,7 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        Spinner spinnerCircleRadius = (Spinner) fragmentView.findViewById(R.id.spinner_circle_radius);
+        Spinner spinnerCircleRadius = fragmentView.findViewById(R.id.spinner_circle_radius);
         ArrayAdapter<Integer> dataCircleRadiusesAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, circleRadiuses);
         dataCircleRadiusesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCircleRadius.setAdapter(dataCircleRadiusesAdapter);
@@ -102,7 +102,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Spinner spinnerTopAndBottomOffset = (Spinner) fragmentView.findViewById(R.id.spinner_top_and_bottom_offset);
+        Spinner spinnerTopAndBottomOffset = fragmentView.findViewById(R.id.spinner_top_and_bottom_offset);
         ArrayAdapter<Integer> dataTopAndBottomOffsetsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, topAndBottomOffsets);
         dataTopAndBottomOffsetsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTopAndBottomOffset.setAdapter(dataTopAndBottomOffsetsAdapter);
@@ -120,7 +120,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Spinner spinnerWidth = (Spinner) fragmentView.findViewById(R.id.spinner_x_gap);
+        Spinner spinnerWidth = fragmentView.findViewById(R.id.spinner_x_gap);
         ArrayAdapter<Integer> dataWidthsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, widths);
         dataWidthsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerWidth.setAdapter(dataWidthsAdapter);
@@ -138,7 +138,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Spinner spinnerHeight = (Spinner) fragmentView.findViewById(R.id.spinner_y_gap);
+        Spinner spinnerHeight = fragmentView.findViewById(R.id.spinner_y_gap);
         ArrayAdapter<Integer> dataHeightsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, heights);
         dataHeightsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerHeight.setAdapter(dataHeightsAdapter);
@@ -156,7 +156,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Spinner spinnerAnimationDuration = (Spinner) fragmentView.findViewById(R.id.spinner_animation_duration);
+        Spinner spinnerAnimationDuration = fragmentView.findViewById(R.id.spinner_animation_duration);
         ArrayAdapter<Float> dataAnimationDurationsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, animationDurations);
         dataAnimationDurationsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAnimationDuration.setAdapter(dataAnimationDurationsAdapter);

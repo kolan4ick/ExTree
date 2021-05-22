@@ -47,7 +47,7 @@ public class ScrollViewOverBottomMenu extends ScrollView {
             DisplayMetrics d = new DisplayMetrics();
             display.getMetrics(d);
             // Here is the key, set the controls height can not exceed half the screen height (d.heightPixels / 2) (in this height they need replacing)
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(d.heightPixels - heightOfMenu, MeasureSpec.AT_MOST);
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(d.heightPixels, MeasureSpec.AT_MOST);
 
         } catch (Exception e) {
             e.printStackTrace();

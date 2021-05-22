@@ -21,6 +21,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.extree.ItemViewModel;
 import com.example.extree.R;
+import com.example.extree.Util;
 import com.example.extree.tree.BinaryExpressionTree;
 import com.example.extree.tree.ExpressionNode;
 import com.example.extree.tree.ExpressionNumber;
@@ -49,22 +50,17 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
         this.binaryExpressionTree = binaryExpressionTree;
     }
 
-    /* Method for converting dp to pixels */
-    public static int pxFromDp(final Context context, final int dp) {
-        return (int) (dp * context.getResources().getDisplayMetrics().density);
-    }
-
     /* Method for initializing main values */
     private void init() {
 
         commonColor = getResources().getColor(R.color.app_common_color);
         traversalColor = getResources().getColor(R.color.home_nav_sort_color);
 
-        textSize = pxFromDp(getContext(), prefs.getInt("fontSizeSettingsValue", 14));
-        mCircleRadius = pxFromDp(getContext(), prefs.getInt("circleRadiusSettingsValue", 24));
-        topAndBottomOffset = pxFromDp(getContext(), prefs.getInt("topAndBottomOffsetSettingsValue", 25));
-        xGap = pxFromDp(getContext(), prefs.getInt("widthSettingsValue", 14));
-        yGap = pxFromDp(getContext(), prefs.getInt("heightSettingsValue", 14));
+        textSize = (int) Util.pxFromDp(getContext(), prefs.getInt("fontSizeSettingsValue", 14));
+        mCircleRadius = (int) Util.pxFromDp(getContext(), prefs.getInt("circleRadiusSettingsValue", 24));
+        topAndBottomOffset = (int) Util.pxFromDp(getContext(), prefs.getInt("topAndBottomOffsetSettingsValue", 25));
+        xGap = (int) Util.pxFromDp(getContext(), prefs.getInt("widthSettingsValue", 14));
+        yGap = (int) Util.pxFromDp(getContext(), prefs.getInt("heightSettingsValue", 14));
 
         initPaint();
         initAnimator();
@@ -73,13 +69,10 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
     /* Method for initializing main values for animation */
     private void initAnimator() {
         mValueAnimator = ValueAnimator.ofInt(0, 255);
-        mValueAnimator.setDuration((int) (800 / (double)prefs.getFloat("animationDurationSettingsValue", 1f)));
-        mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                alpha = (int) animation.getAnimatedValue();
-                invalidate();
-            }
+        mValueAnimator.setDuration((int) (800 / (double) prefs.getFloat("animationDurationSettingsValue", 1f)));
+        mValueAnimator.addUpdateListener(animation -> {
+            alpha = (int) animation.getAnimatedValue();
+            invalidate();
         });
         mValueAnimator.addListener(this);
     }
@@ -199,7 +192,7 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
             int maxLeafCount = (int) Math.pow(2, treeHeight);
             mWidth = mCircleRadius * 2 * maxLeafCount + 2 * xGap * (maxLeafCount + 1);
             mWidth = Math.max(mWidth, minimumViewWidth) * 6;
-            mHeight = minimumViewHeight - 63 * 3;
+            mHeight = minimumViewHeight;
             setMeasuredDimension(mWidth, mHeight);
         }
     }
@@ -521,6 +514,12 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
     /* Maximum value of step in animation */
     private int stepLimit;
     private boolean firstLaunch = true;
+
+    public void setmHeightOfMenu(int heightOfMenu) {
+        this.heightOfMenu = heightOfMenu;
+    }
+
+    private int heightOfMenu;
     /* Shared preferences for parameters of tree */
     private final SharedPreferences prefs = getContext().getSharedPreferences("com.example.extree", Context.MODE_PRIVATE);
 }

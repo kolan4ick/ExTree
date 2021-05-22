@@ -58,12 +58,10 @@ public class HistoryFragment extends Fragment {
         fragmentView = inflater.inflate(R.layout.fragment_history, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
         SQLiteDatabase db = viewModel.getDataBaseHelperValue().getReadableDatabase();
-        Toast.makeText(getContext(), db.toString(), Toast.LENGTH_SHORT).show();
         List<CalculatorModel> elements = viewModel.getDataBaseHelperValue().getEveryone();
         LinearLayout linearLayout = fragmentView.findViewById(R.id.linear_elements_layout);
         scrollViewOverBottomMenu = fragmentView.findViewById(R.id.scrollable_history);
-        scrollViewOverBottomMenu.post(() -> scrollViewOverBottomMenu.scrollTo(0, scrollViewOverBottomMenu.getBottom()));
-        scrollViewOverBottomMenu.setHeightOfMenu(viewModel.getDataMenuHeightValue());
+        scrollViewOverBottomMenu.post(() -> scrollViewOverBottomMenu.fullScroll(View.FOCUS_DOWN));
         for (int i = 0; i < elements.size(); i++) {
             linearLayout.addView(createButton(elements.get(i).getCalculatorID(), elements.get(i).getResultString(), elements.get(i).getExpression(), elements.get(i).getResultDouble()));
         }

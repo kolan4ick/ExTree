@@ -1,28 +1,35 @@
 package com.example.extree;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Point;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import android.text.method.ScrollingMovementMethod;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.ContextMenu;
+import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.extree.database.CalculatorModel;
 import com.example.extree.tree.BinaryExpressionTree;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,20 +58,19 @@ public class CalculatorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_calculator, container, false);
-
+        AppCompatButton btnTree = fragmentView.findViewById(R.id.buttonGenerateTree);
+        AppCompatButton btnOne = fragmentView.findViewById(R.id.buttonOne);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
-
         if (viewModel.getDataCalculatorResultValue() != null) {
             ((TextView) (fragmentView.findViewById(R.id.textView))).setText(viewModel.getDataCalculatorResultValue());
             result = viewModel.getDataCalculatorResultDoubleValue();
         }
-
         int height = Resources.getSystem().getDisplayMetrics().heightPixels;
         int width = Resources.getSystem().getDisplayMetrics().widthPixels;
-        ((TextView) fragmentView.findViewById(R.id.textView)).setHeight((int) (height / 2.5));
+        ((TextView) fragmentView.findViewById(R.id.textView)).setHeight((int) (height - ((Util.pxFromDp(getContext(), (int) (75 * 6.7))))));
         ((TextView) fragmentView.findViewById(R.id.textView)).setWidth((int) (width / 1.2));
         ((TextView) fragmentView.findViewById(R.id.textView)).setMovementMethod(new ScrollingMovementMethod());
-        androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) fragmentView.findViewById(R.id.toolbarCalculator);
+        androidx.appcompat.widget.Toolbar toolbar = fragmentView.findViewById(R.id.toolbarCalculator);
         /* Adding action after click on Settings item in menu */
         toolbar.getMenu().getItem(0).setOnMenuItemClickListener(item -> {
             viewModel.getDataNavControllerValue().navigate(R.id.settingsFragment);
