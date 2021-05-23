@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.ExTree" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/highlighted_color</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -16,27 +16,16 @@
         <item name="windowNoTitle">true</item>
         <item name="colorButtonNormal">#1a237e</item>
         <item name="colorControlHighlight">#c9a142</item>
-        <item name="actionBarStyle">@style/ThemeActionBar</item>
-        <!--        <item name="android:stateListAnimator">@animator/button_elevation</item>-->
+        <item name="android:fontFamily">@font/ubuntu_regular</item>
     </style>
 
-    <style name="Theme.Extree.FirstLaunch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-
-        <item name="android:windowIsTranslucent">true</item>
+    <style name="Theme.Extree.FirstLaunch" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:backgroundDimEnabled">false</item>
-        <!--        <item name="android:windowCloseOnTouchOutside">true</item>-->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
-
-    <style name="ThemeActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="android:background">@null</item>
-        <!-- Support library compatibility -->
-        <item name="android:height">0dp</item>
-    </style>
-
 </resources>

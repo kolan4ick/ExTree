@@ -15,6 +15,6 @@
     <color name="app_common_color">#3CB3FF</color>
     <color name="home_nav_sort_color">#FF9F60</color>
     <color name="highlighted_color">#c9a142</color>
-    <color name="first_launch_background">#ebebeb</color>
-    <color name="first_launch_text_color">#727272</color>
+    <color name="first_launch_background">#2b2b2c</color>
+    <color name="first_launch_text_color">#959597</color>
 </resources>

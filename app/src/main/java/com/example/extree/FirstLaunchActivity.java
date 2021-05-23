@@ -18,17 +18,15 @@ public class FirstLaunchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_launch);
-        View overlay = findViewById(R.id.scrollViewFirstLaunch);
-        overlay.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_FULLSCREEN);
         AppCompatButton btnSubmit = findViewById(R.id.button_start_first_launch);
         btnSubmit.setOnClickListener(v -> finish());
+        AppCompatButton btnClose = findViewById(R.id.button_close_first_launch);
+        btnClose.setOnClickListener(v -> finish());
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        getWindow().setLayout((int) (width * .8), (int) (height * .5));
+        getWindow().setLayout((int) (width * .8), (int) (height * .7));
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.gravity = Gravity.CENTER;
         params.x = 0;
