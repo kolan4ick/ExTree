@@ -16,6 +16,7 @@ import android.view.View;
 
 import android.annotation.SuppressLint;
 import android.view.ScaleGestureDetector;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintSet;
 
@@ -266,7 +267,8 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
 
     public void Next() {
         int count = binaryExpressionTree.getNodeCount();
-        if (stepLimit > count) {
+        if (stepLimit > count && state != STATE_NORMAL) {
+            Toast.makeText(getContext(), "someTextAfterAnimation", Toast.LENGTH_SHORT).show();
             return;
         }
         stepLimit++;

@@ -14,10 +14,9 @@ public class BinaryExpressionTree {
         IExpression tree = MakeBinaryExpressionTree(expression);
         if (tree instanceof ExpressionNumber) {
             this.root = new ExpressionNumber(((ExpressionNumber) tree).number);
-        } else {
-            assert tree != null;
+        } else if (tree instanceof ExpressionNode) {
             this.root = new ExpressionNode(((ExpressionNode) tree).getLeft(), ((ExpressionNode) tree).getRight(), ((ExpressionNode) tree).getOp());
-        }
+        } else this.root = null;
     }
 
     /* Getter root value */
@@ -33,7 +32,12 @@ public class BinaryExpressionTree {
 
     /* Calculating the value of an expression */
     public Double Evaluate() {
-        return root.Evaluate();
+        if (root != null) {
+            Double res = root.Evaluate();
+            if (Double.isNaN(res) || Double.isInfinite(res)) return null;
+            return res;
+        }
+        return null;
     }
 
     /* Prefix form */
@@ -92,6 +96,9 @@ public class BinaryExpressionTree {
 
     /* Method for converting a string expression into an array of objects */
     private ArrayList<Object> StringIntoTheArrayObject(String expression) {
+        char lastElementOfExpression = expression.charAt(expression.length() - 2);
+        if (lastElementOfExpression == '-' || lastElementOfExpression == '+' || lastElementOfExpression == '*' || lastElementOfExpression == '/' || lastElementOfExpression == '^')
+            expression = (expression.substring(0, expression.length() - 2)) + ")";
         char[] expr = expression.replace(',', '.').toCharArray();
         StringBuilder num = new StringBuilder();
         ArrayList<Object> arrayList = new ArrayList<>();
@@ -128,10 +135,7 @@ public class BinaryExpressionTree {
 
     /* Main method for creating binary expression tree from string expression */
     private IExpression MakeBinaryExpressionTree(String expression) {
-        if (CorrectBracketSequence(expression)) {
-            if (CorrectBracketSequence(expression + ")")) return null;
-            else expression += ")";
-        }
+        if (CorrectBracketSequence(expression)) return null;
         expression = "(" + expression;
         expression += ")";
         ArrayList<Object> arrayList = StringIntoTheArrayObject(expression);

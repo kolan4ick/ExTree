@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -173,7 +175,15 @@ public class SettingsFragment extends Fragment {
 
             }
         });
-
+        CheckBox checkBox = fragmentView.findViewById(R.id.checkbox_is_animated_tree_traversal);
+        checkBox.setChecked(prefs.getBoolean("isAnimatedTreeTraversalSettings", true));
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                checkBox.setChecked(isChecked);
+                prefs.edit().putBoolean("isAnimatedTreeTraversalSettings", isChecked).apply();
+            }
+        });
         return fragmentView;
 
     }

@@ -42,8 +42,15 @@ public class HistoryFragment extends Fragment {
         btn.setTag("buttonHistory_" + ID.toString());
         btn.setText(result);
         btn.setTextSize(20);
+        BinaryExpressionTree binaryExpressionTree = new BinaryExpressionTree(expression);
         btn.setOnClickListener(v -> {
-            viewModel.setDataBinaryExpressionTreeValue(new BinaryExpressionTree(expression));
+            if (binaryExpressionTree.Evaluate() != null) {
+                viewModel.setDataBinaryExpressionTreeValue(new BinaryExpressionTree(expression));
+                viewModel.getDataMenuValue().getMenu().getItem(1).setEnabled(true);
+            } else {
+                viewModel.getDataMenuValue().getMenu().getItem(1).setEnabled(false);
+                viewModel.setDataBinaryExpressionTreeValue(null);
+            }
             viewModel.setDataCalculatorResultValue(expression);
             viewModel.setDataCalculatorResultDoubleValue(resultDoulbe);
             viewModel.getDataNavControllerValue().popBackStack();

@@ -103,8 +103,10 @@ public class CalculatorFragment extends Fragment {
                 if (!resultText.getText().toString().contains("=")) {
                     BinaryExpressionTree binaryExpressionTree = new BinaryExpressionTree(resultText.getText().toString());
                     String expression = resultText.getText().toString();
-                    resultText.append("\n=" + (result = binaryExpressionTree.Evaluate()).toString());
-                    viewModel.setDataBinaryExpressionTreeValue(binaryExpressionTree);
+                    result = binaryExpressionTree.Evaluate();
+                    resultText.append("\n=" + (result == null ? "Error" : result.toString()));
+                    if (result == null) viewModel.setDataBinaryExpressionTreeValue(null);
+                    else viewModel.setDataBinaryExpressionTreeValue(binaryExpressionTree);
                     Boolean insert = viewModel.getDataBaseHelperValue().addOne(new CalculatorModel(expression, resultText.getText().toString(), result));
                     Toast.makeText(getContext(), insert.toString(), Toast.LENGTH_SHORT).show();
                 }
@@ -134,9 +136,8 @@ public class CalculatorFragment extends Fragment {
                     }
                 } else {
                     try {
-
                         if (operations.contains(pressedButtonText.charAt(0))) {
-                            resultText.setText(result.toString());
+                            resultText.setText(result == null ? "0" : result.toString());
                             resultText.append(pressedButtonText);
                         } else {
                             resultText.setText(pressedButtonText);

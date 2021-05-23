@@ -1,10 +1,13 @@
 package com.example.extree;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.core.view.WindowCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         prefs = getSharedPreferences("com.example.extree", MODE_PRIVATE);
         bottomNavigationView = findViewById(R.id.activity_main_bottom_navigation_view);
+        viewModel.setDataMenuValue(bottomNavigationView);
         dbHelper = new DatabaseHelper(this.getBaseContext());
         viewModel.setDataBaseHelperValue(dbHelper);
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> {
@@ -87,11 +91,19 @@ public class MainActivity extends AppCompatActivity {
     public void onClickButtonGenerateTreeCalculator(View view) {
         String resultText = ((TextView) findViewById(R.id.textView)).getText().toString();
         if (!resultText.contains("=")) {
-            viewModel.setDataBinaryExpressionTreeValue(new BinaryExpressionTree(resultText));
-            bottomNavigationView.getMenu().getItem(1).setEnabled(true);
+            BinaryExpressionTree binaryExpressionTree = new BinaryExpressionTree(resultText);
+            if (binaryExpressionTree.Evaluate() != null) {
+                viewModel.setDataBinaryExpressionTreeValue(binaryExpressionTree);
+                bottomNavigationView.getMenu().getItem(1).setEnabled(true);
+            } else {
+                viewModel.setDataBinaryExpressionTreeValue(null);
+                bottomNavigationView.getMenu().getItem(1).setEnabled(false);
+            }
         }
-        NavController navigation = Navigation.findNavController(findViewById(R.id.activity_main_nav_host_fragment));
-        navigation.navigate(R.id.treeFragment);
+        if (viewModel.getDataBinaryExpressionTreeValue() != null && viewModel.getDataBinaryExpressionTreeValue().Evaluate() != null) {
+            NavController navigation = Navigation.findNavController(findViewById(R.id.activity_main_nav_host_fragment));
+            navigation.navigate(R.id.treeFragment);
+        }
     }
 
     public void onClickButtonTree(View view) {
