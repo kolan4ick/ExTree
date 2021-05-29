@@ -42,7 +42,7 @@ public class ResultTreeTraversalActivity extends AppCompatActivity {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("result_of_tree_traversal", treeTraversal);
             clipboard.setPrimaryClip(clip);
-            Toast.makeText(this, "Результат успішно зкопійовано!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Результат успішно скопійовано!", Toast.LENGTH_SHORT).show();
         });
     }
 }

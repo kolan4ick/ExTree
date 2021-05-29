@@ -21,7 +21,9 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.example.extree.ItemViewModel;
+import com.example.extree.MainActivity;
 import com.example.extree.R;
+import com.example.extree.TreeFragment;
 import com.example.extree.Util;
 import com.example.extree.tree.BinaryExpressionTree;
 import com.example.extree.tree.ExpressionNode;
@@ -266,9 +268,12 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
 
 
     public void Next() {
+        if (!treeFragment.isVisible()) {
+            return;
+        }
         int count = binaryExpressionTree.getNodeCount();
         if (stepLimit > count && state != STATE_NORMAL) {
-            Toast.makeText(getContext(), "someTextAfterAnimation", Toast.LENGTH_SHORT).show();
+            treeFragment.showResultOfTreeTraversal(state);
             return;
         }
         stepLimit++;
@@ -519,6 +524,12 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
 
     public void setmHeightOfMenu(int heightOfMenu) {
         this.heightOfMenu = heightOfMenu;
+    }
+
+    private TreeFragment treeFragment;
+
+    public void setTreeFragment(TreeFragment treeFragment) {
+        this.treeFragment = treeFragment;
     }
 
     private int heightOfMenu;

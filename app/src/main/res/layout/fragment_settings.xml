@@ -205,11 +205,14 @@
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:text="Анімований обхід"
+            android:theme="@style/checkBoxStyle"
+            android:buttonTint="@color/highlighted_color"
             android:textColor="@color/modal_text_color"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner_animation_duration"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -24,45 +24,41 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_pre"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/highlighted_round_calculator_button"
+            android:background="@drawable/invisible_background_button"
             android:onClick="onClickButtonTree"
-            android:text="Pre order"
+            android:text="Префіксний обхід"
             android:textSize="9sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_in"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/highlighted_round_calculator_button"
+            android:background="@drawable/invisible_background_button"
             android:onClick="onClickButtonTree"
-            android:text="In order"
+            android:text="Симетричний обхід"
             android:textSize="9sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_post"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/highlighted_round_calculator_button"
+            android:background="@drawable/invisible_background_button"
             android:onClick="onClickButtonTree"
-            android:text="Post order"
+            android:text="Постфіксний обхід"
             android:textSize="9sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_clear"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/highlighted_round_calculator_button"
+            android:background="@drawable/invisible_background_button"
             android:onClick="onClickButtonTree"
-            android:text="Clear all"
+            android:text="Очистити"
             android:textSize="9sp" />
 
     </LinearLayout>

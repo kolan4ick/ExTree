@@ -61,34 +61,45 @@ public class TreeFragment extends Fragment implements AnimEndListener {
             binaryExpressionTreeView.setBinaryExpressionTree(viewModel.getDataBinaryExpressionTreeValue());
             binaryExpressionTreeView.setmHeightOfMenu(viewModel.getDataMenuHeightValue());
             binaryExpressionTreeView.setAnimEndListener(this);
+            binaryExpressionTreeView.setTreeFragment(this);
         }
         return fragmentView;
     }
 
+    public void showResultOfTreeTraversal(int state) {
+        Intent intent = new Intent(getContext(), ResultTreeTraversalActivity.class);
+        switch (state) {
+            case 1:
+                intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().PreOrder());
+                break;
+            case 2:
+                intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().SymmetricOrder());
+
+                break;
+            case 3:
+                intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().PostOrder());
+                break;
+        }
+        startActivity(intent);
+    }
+
     @SuppressLint("NonConstantResourceId")
     public void onClickButtonTree(View view) {
-        Intent intent = new Intent(getContext(), ResultTreeTraversalActivity.class);
         switch (view.getId()) {
             case R.id.btn_pre:
                 if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
                     binaryExpressionTreeView.beginPreOrderTraversal();
-                }
-                intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().PreOrder());
-                startActivity(intent);
+                } else showResultOfTreeTraversal(1);
                 break;
             case R.id.btn_in:
                 if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
                     binaryExpressionTreeView.beginInOrderTraversal();
-                }
-                intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().SymmetricOrder());
-                startActivity(intent);
+                } else showResultOfTreeTraversal(2);
                 break;
             case R.id.btn_post:
                 if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
                     binaryExpressionTreeView.beginPostOrderTraversal();
-                }
-                intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().PostOrder());
-                startActivity(intent);
+                } else showResultOfTreeTraversal(3);
                 break;
             case R.id.btn_clear:
                 if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {

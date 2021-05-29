@@ -113,6 +113,7 @@ public class HistoryFragment extends Fragment {
         } else {
             TextView emptyHistoryTextView = new TextView(getContext());
             emptyHistoryTextView.setText("Історія поки що пуста...");
+            emptyHistoryTextView.setPadding(0, 300, 0, 0);
             emptyHistoryTextView.setTextSize(25);
             emptyHistoryTextView.setGravity(Gravity.CENTER);
             linearLayout.addView(emptyHistoryTextView);
