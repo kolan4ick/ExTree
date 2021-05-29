@@ -3,13 +3,15 @@
     android:color="@color/LightDark">
     <item android:id="@android:id/mask">
         <shape>
+            <corners android:radius="10dp" />
             <solid android:color="#87CEEB" />
         </shape>
     </item>
 
     <item android:id="@android:id/background">
         <shape>
-            <solid android:color="@null" />
+            <corners android:radius="10dp" />
+            <solid android:color="@color/secondary_color_background"/>
         </shape>
     </item>
 </ripple>

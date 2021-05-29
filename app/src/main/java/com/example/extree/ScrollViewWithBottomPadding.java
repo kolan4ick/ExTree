@@ -7,30 +7,30 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.widget.ScrollView;
 
-public class ScrollViewOverBottomMenu extends ScrollView {
+public class ScrollViewWithBottomPadding extends ScrollView {
     private Context mContext;
-    private int heightOfMenu;
+    private int bottomPadding;
 
-    public void setHeightOfMenu(int heightOfMenu) {
-        this.heightOfMenu = heightOfMenu;
+    public void setBottomPadding(int bottomPadding) {
+        this.bottomPadding = bottomPadding;
     }
 
-    public ScrollViewOverBottomMenu(Context context) {
+    public ScrollViewWithBottomPadding(Context context) {
         super(context);
         init(context);
     }
 
-    public ScrollViewOverBottomMenu(Context context, AttributeSet attrs) {
+    public ScrollViewWithBottomPadding(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public ScrollViewOverBottomMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ScrollViewWithBottomPadding(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
-    public ScrollViewOverBottomMenu(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ScrollViewWithBottomPadding(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
     }
@@ -47,7 +47,7 @@ public class ScrollViewOverBottomMenu extends ScrollView {
             DisplayMetrics d = new DisplayMetrics();
             display.getMetrics(d);
             // Here is the key, set the controls height can not exceed half the screen height (d.heightPixels / 2) (in this height they need replacing)
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(d.heightPixels, MeasureSpec.AT_MOST);
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(d.heightPixels - bottomPadding, MeasureSpec.AT_MOST);
 
         } catch (Exception e) {
             e.printStackTrace();

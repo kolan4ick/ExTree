@@ -68,16 +68,24 @@ public class TreeFragment extends Fragment implements AnimEndListener {
     public void onClickButtonTree(View view) {
         switch (view.getId()) {
             case R.id.btn_pre:
-                binaryExpressionTreeView.beginPreOrderTraversal();
+                if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
+                    binaryExpressionTreeView.beginPreOrderTraversal();
+                }
                 break;
             case R.id.btn_in:
-                binaryExpressionTreeView.beginInOrderTraversal();
+                if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
+                    binaryExpressionTreeView.beginInOrderTraversal();
+                }
                 break;
             case R.id.btn_post:
-                binaryExpressionTreeView.beginPostOrderTraversal();
+                if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
+                    binaryExpressionTreeView.beginPostOrderTraversal();
+                }
                 break;
             case R.id.btn_clear:
-                binaryExpressionTreeView.beginClear();
+                if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
+                    binaryExpressionTreeView.beginClear();
+                }
                 break;
         }
     }

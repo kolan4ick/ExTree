@@ -16,5 +16,6 @@
     <color name="home_nav_sort_color">#FF9F60</color>
     <color name="highlighted_color">#E3B548</color>
     <color name="first_launch_text_color">#727272</color>
-    <color name="first_launch_background">#ebebeb</color>
+    <color name="secondary_color_background">#ebebeb</color>
+    <color name="secondary_color">#2b2b2c</color>
 </resources>

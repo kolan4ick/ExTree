@@ -26,14 +26,76 @@
     <string name="result">=</string>
     <string name="makeTree">🌳</string>
     <string name="firstLaunchTextPartOne">What is this application for: </string>
-    <string name="firstLaunchTextPartTwo">• For the most important thing, without which we would not have flown into space, have not advanced so far in science and the development of our civilization - counting.
-        \n• Also, to display a binary expression tree and use it to learn how to build binary trees and translate an expression from one form of writing to another, it will be especially useful for people whose activities are somehow related to computer science. After all, the prefix form of writing (it is also called the Polish inverse record) is used in all programming languages to store and calculate expressions.</string>
-    <string name="firstLaunchTextPartThree">Functionality of this application:</string>
-    <string name="firstLaunchTextPartFour">• Work in normal calculator mode.
-    \n• Save the values of previous calculations in the database, for further display and use on the History page.
-    \n• Build binary expression trees.
-    \n• Animated traversal of the binary expression tree (prefix, infix and postfix traversals).
-    \n• Get the results of the traversals.
-    \n• Get the results of the traversals.</string>
-    <string name="firstLaunchTextPartFive">You can find instructions for using the program on the About page, which is located in the menu of the Calculator page.</string>
+    <string-array name="fontSizes">
+        <item>10</item>
+        <item>12</item>
+        <item>14</item>
+        <item>18</item>
+        <item>20</item>
+        <item>24</item>
+        <item>28</item>
+        <item>30</item>
+        <item>32</item>
+        <item>34</item>
+    </string-array>
+    <string-array name="circleRadiuses">
+        <item>15</item>
+        <item>18</item>
+        <item>21</item>
+        <item>24</item>
+        <item>27</item>
+        <item>30</item>
+        <item>33</item>
+        <item>36</item>
+        <item>39</item>
+        <item>42</item>
+    </string-array>
+    <string-array name="topAndBottomOffsets">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+    </string-array>
+    <string-array name="widths">
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>22</item>
+        <item>24</item>
+    </string-array>
+    <string-array name="heights">
+        <item>4</item>
+        <item>8</item>
+        <item>12</item>
+        <item>16</item>
+        <item>20</item>
+        <item>24</item>
+        <item>28</item>
+        <item>32</item>
+        <item>36</item>
+        <item>40</item>
+    </string-array>
+    <string-array name="animationDurations">
+        <item>0.5f</item>
+        <item>0.75f</item>
+        <item>1.0f</item>
+        <item>1.25f</item>
+        <item>1.5f</item>
+        <item>1.75f</item>
+        <item>2.0f</item>
+        <item>2.5f</item>
+        <item>3.0f</item>
+        <item>4.0f</item>
+    </string-array>
 </resources>

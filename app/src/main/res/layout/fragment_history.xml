@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.extree.ScrollViewOverBottomMenu xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollable_history"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HistoryFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linear_elements_layout"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <com.example.extree.ScrollViewWithBottomPadding
+        android:id="@+id/scrollable_history"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" />
-</com.example.extree.ScrollViewOverBottomMenu>
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="?attr/actionBarSize"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarHistory"
+        tools:context=".HistoryFragment">
+
+        <LinearLayout
+            android:id="@+id/linear_elements_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+
+    </com.example.extree.ScrollViewWithBottomPadding>
+</androidx.constraintlayout.widget.ConstraintLayout>

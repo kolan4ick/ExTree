@@ -71,4 +71,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+    public void clearDatabase() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String clearDBQuery = "DELETE FROM " + CALCULATOR_TABLE;
+        db.execSQL(clearDBQuery);
+    }
 }
