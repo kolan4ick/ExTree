@@ -35,9 +35,7 @@ public class AboutFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setNavigationOnClickListener(v -> viewModel.getDataNavControllerValue().popBackStack());
         TextView textView = fragmentView.findViewById(R.id.about_body_text_view);
-        textView.setText("Version\n" + BuildConfig.VERSION_NAME);
-        AppCompatButton btn = fragmentView.findViewById(R.id.buttonGoToInstructions);
-        btn.setOnClickListener(v -> viewModel.getDataNavControllerValue().navigate(R.id.instructionsFragment));
+        textView.setText("Версія\n" + BuildConfig.VERSION_NAME);
         return fragmentView;
     }
 }

@@ -1,27 +1,20 @@
 package com.example.extree;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDialog;
-import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.core.view.WindowCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowInsets;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.extree.database.DatabaseHelper;
 import com.example.extree.tree.BinaryExpressionTree;
@@ -102,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (viewModel.getDataBinaryExpressionTreeValue() != null && viewModel.getDataBinaryExpressionTreeValue().Evaluate() != null) {
             NavController navigation = Navigation.findNavController(findViewById(R.id.activity_main_nav_host_fragment));
+            bottomNavigationView.getMenu().getItem(1).setEnabled(true);
             navigation.navigate(R.id.treeFragment);
         }
     }

@@ -3,15 +3,15 @@
     <item
         android:id="@+id/calculatorFragment"
         android:icon="@drawable/calculator"
-        android:title="Calculator" />
+        android:title="Калькулятор" />
     <item
         android:id="@+id/treeFragment"
         android:enabled="false"
         android:icon="@drawable/tree"
-        android:title="Tree" />
+        android:title="Дерево" />
 
     <item
         android:id="@+id/historyFragment"
         android:icon="@drawable/history"
-        android:title="History" />
+        android:title="Історія" />
 </menu>

@@ -30,15 +30,18 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="25sp"
-        app:layout_constraintTop_toBottomOf="@+id/about_title_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/about_title_text_view"
+        tools:layout_editor_absoluteX="0dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonGoToInstructions"
+    <TextView
+        android:id="@+id/creating_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/highlighted_round_calculator_button"
-        android:text="Go to instructions"
+        android:text="Створено у 2021 році"
+        android:textAlignment="center"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/about_body_text_view" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

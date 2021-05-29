@@ -87,15 +87,15 @@
         <item>40</item>
     </string-array>
     <string-array name="animationDurations">
-        <item>0.5f</item>
-        <item>0.75f</item>
-        <item>1.0f</item>
-        <item>1.25f</item>
-        <item>1.5f</item>
-        <item>1.75f</item>
-        <item>2.0f</item>
-        <item>2.5f</item>
-        <item>3.0f</item>
-        <item>4.0f</item>
+        <item>0.5</item>
+        <item>0.75</item>
+        <item>1.0</item>
+        <item>1.25</item>
+        <item>1.5</item>
+        <item>1.75</item>
+        <item>2.0</item>
+        <item>2.5</item>
+        <item>3.0</item>
+        <item>4.0</item>
     </string-array>
 </resources>

@@ -55,7 +55,7 @@
                 android:paddingLeft="20dp"
                 android:paddingTop="20dp"
                 android:paddingRight="20dp"
-                android:text="Welcome to ExTree!"
+                android:text="Вітаємо в ExTree!"
                 android:textAlignment="center"
                 android:textColor="@color/first_launch_text_color"
                 android:textSize="30sp"

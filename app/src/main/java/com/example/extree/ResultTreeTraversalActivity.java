@@ -11,4 +11,10 @@ public class ResultTreeTraversalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_tree_traversal);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }

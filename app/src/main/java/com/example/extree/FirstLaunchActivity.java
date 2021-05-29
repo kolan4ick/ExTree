@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import static android.text.Html.FROM_HTML_MODE_LEGACY;
+
 public class FirstLaunchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,41 +35,35 @@ public class FirstLaunchActivity extends AppCompatActivity {
         params.y = -20;
         getWindow().setAttributes(params);
         TextView textView = findViewById(R.id.first_launch_body_text_view_part_one);
-        textView.setText(Html.fromHtml(bodyTextView));
+        textView.setText(Html.fromHtml(bodyTextView, FROM_HTML_MODE_LEGACY));
     }
 
-    private final String bodyTextView = "<strong>What is this application for:</strong>" +
+    private final String bodyTextView = "<strong>Для чого призначений даний застосунок:</strong>" +
             "<ul>" +
             "  <li>" +
-            "    The most important thing, without which we would not have flown into space, have not advanced so far in science" +
-            "    and the development of our civilization - counting." +
+            "    Для найважливішої справи, без якої ми б не полетіли в космос, не просунулись так далеко в науці та розвитку нашої цивілізації – рахування." +
             "  </li>" +
             "  <li>" +
-            "    Display a binary expression tree and use it to learn how to build binary trees and translate an" +
-            "    expression" +
-            "    from one form of writing to another, it will be especially useful for people whose activities are somehow related to" +
-            "    computer science. After all, the prefix form of writing (it is also called the Polish inverse record) is used in all" +
-            "    programming languages to store and calculate expressions." +
+            "   Також для того, щоб відобразити бінарне дерево виразів, та з його допомогою навчитись будувати бінарні дерева та переводити вираз з однієї форми запису в іншу, особливо це буде корисно для людей, діяльність яких, так, чи інакше пов’язано з інформатикою. Адже префіксна форма запису (її ще називають польським інверсним записом) використовується всіма мовами програмування для зберігання та обрахування виразів." +
             "  </li>" +
             "</ul>" +
-            "<strong>Functionality of this application:</strong>" +
+            "<strong>Функціонал даного застосунку:</strong>" +
             "<ul>" +
             "  <li>" +
-            "    Work in normal calculator mode." +
+            "    Працювати у режимі звичайного калькулятору." +
             "  </li>" +
             "  <li>" +
-            "    Save the values of previous calculations in the database, for further display and use on the History page." +
+            "    Зберігати значення попередніх обрахунків у базу даних, для подальшого відображення та використання на сторінці Історія." +
             "  </li>" +
             "  <li>" +
-            "    Build binary expression trees." +
+            "    Будувати бінарні дерева виразів." +
             "  </li>" +
             "  <li>" +
-            "    Animated traversal of the binary expression tree (prefix, infix and postfix traversals)." +
+            "    Анімовано проводити обхід бінарного дерева виразів(префіксний, інфіксний та постфіксний обходи)." +
             "  </li>" +
             "  <li>" +
-            "    Get the results of the traversals." +
+            "    Отримувати результати обходів." +
             "  </li>" +
-            "  You can find instructions for using the program on the About page, which is located in the menu of the Calculator" +
-            "  page." +
+            "  Ви можете знайти інструкції з використання програмою на сторінці About, що знаходиться в меню сторінки Calculator." +
             "</ul>";
 }
