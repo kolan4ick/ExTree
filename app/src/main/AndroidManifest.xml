@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/extree_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ExTree">
-        <activity android:name=".ResultTreeTraversalActivity"></activity>
+        <activity
+            android:name=".ResultTreeTraversalActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Extree.ResultTreeTraversal"/>
         <activity
             android:name=".FirstLaunchActivity"
             android:screenOrientation="portrait"

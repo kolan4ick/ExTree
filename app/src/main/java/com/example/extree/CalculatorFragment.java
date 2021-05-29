@@ -107,8 +107,7 @@ public class CalculatorFragment extends Fragment {
                     resultText.append("\n=" + (result == null ? "Error" : result.toString()));
                     if (result == null) viewModel.setDataBinaryExpressionTreeValue(null);
                     else viewModel.setDataBinaryExpressionTreeValue(binaryExpressionTree);
-                    Boolean insert = viewModel.getDataBaseHelperValue().addOne(new CalculatorModel(expression, resultText.getText().toString(), result));
-                    Toast.makeText(getContext(), insert.toString(), Toast.LENGTH_SHORT).show();
+                    viewModel.getDataBaseHelperValue().addOne(new CalculatorModel(expression, resultText.getText().toString(), result));
                 }
                 break;
             case R.id.buttonDot:

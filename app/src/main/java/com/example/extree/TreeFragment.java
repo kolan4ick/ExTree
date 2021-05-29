@@ -1,6 +1,7 @@
 package com.example.extree;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -66,21 +67,28 @@ public class TreeFragment extends Fragment implements AnimEndListener {
 
     @SuppressLint("NonConstantResourceId")
     public void onClickButtonTree(View view) {
+        Intent intent = new Intent(getContext(), ResultTreeTraversalActivity.class);
         switch (view.getId()) {
             case R.id.btn_pre:
                 if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
                     binaryExpressionTreeView.beginPreOrderTraversal();
                 }
+                intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().PreOrder());
+                startActivity(intent);
                 break;
             case R.id.btn_in:
                 if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
                     binaryExpressionTreeView.beginInOrderTraversal();
                 }
+                intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().SymmetricOrder());
+                startActivity(intent);
                 break;
             case R.id.btn_post:
                 if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
                     binaryExpressionTreeView.beginPostOrderTraversal();
                 }
+                intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().PostOrder());
+                startActivity(intent);
                 break;
             case R.id.btn_clear:
                 if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {

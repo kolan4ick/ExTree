@@ -6,4 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".ResultTreeTraversalActivity">
 
+    <ScrollView
+        android:id="@+id/scroll_view_tree_traversal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_bg"
+        android:paddingStart="20dp"
+        android:paddingTop="60dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".FirstLaunchActivity">
+
+        <TextView
+            android:id="@+id/result_tree_traversal_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/modal_text_color"
+            android:textSize="20sp" />
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_close_result_tree_traversal"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/round_button_with_tint"
+        android:fontFamily="@font/ubuntu_bold"
+        android:text="x"
+        android:textColor="@color/modal_text_color"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title_result_tree_traversal_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="5dp"
+        android:text="Результат обходу дерева"
+        android:textAlignment="center"
+        android:textColor="@color/modal_text_color"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/button_close_result_tree_traversal"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_copy_result_tree_traversal"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/round_button_with_tint_smaller"
+        android:fontFamily="@font/ubuntu_bold"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Скопіювати"
+        android:textColor="@color/modal_text_color"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

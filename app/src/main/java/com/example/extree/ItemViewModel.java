@@ -18,8 +18,11 @@ public class ItemViewModel extends ViewModel {
     private final MutableLiveData<BinaryExpressionTree> dataBinaryExpressionTree;
     /* Previous Height of Menu (used in other parts of BottomNavigationView) */
     private final MutableLiveData<BottomNavigationView> dataMenu;
+    /* Variable for interaction with database */
     private final MutableLiveData<DatabaseHelper> dataBaseHelper;
+    /* For interaction with navigation state */
     private final MutableLiveData<NavController> dataNavController;
+    /* Height of menu */
     private final MutableLiveData<Integer> dataMenuHeight;
 
     /* Main constructor */
@@ -30,7 +33,7 @@ public class ItemViewModel extends ViewModel {
         dataMenu = new MutableLiveData<>();
         dataBaseHelper = new MutableLiveData<>();
         dataMenuHeight = new MutableLiveData<>();
-        this.dataNavController = new MutableLiveData<>();
+        dataNavController = new MutableLiveData<>();
     }
 
     /* Getter of dataCalculatorResult */
@@ -129,5 +132,4 @@ public class ItemViewModel extends ViewModel {
     public void setDataNavControllerValue(NavController value) {
         dataNavController.setValue(value);
     }
-
 }

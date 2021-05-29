@@ -5,9 +5,9 @@
     android:layout_width="100dp"
     android:layout_height="?attr/dropdownListPreferredItemHeight"
     android:background="@drawable/abc_spinner_mtrl_am_alpha"
-    android:backgroundTint="@color/white"
+    android:backgroundTint="@color/modal_text_color"
     android:ellipsize="marquee"
     android:singleLine="true"
     android:textAlignment="center"
-    android:textColor="@android:color/white"
+    android:textColor="@color/modal_text_color"
     android:textSize="20sp" />
