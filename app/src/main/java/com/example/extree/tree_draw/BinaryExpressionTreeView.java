@@ -5,9 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -16,12 +14,7 @@ import android.view.View;
 
 import android.annotation.SuppressLint;
 import android.view.ScaleGestureDetector;
-import android.widget.Toast;
 
-import androidx.constraintlayout.widget.ConstraintSet;
-
-import com.example.extree.ItemViewModel;
-import com.example.extree.MainActivity;
 import com.example.extree.R;
 import com.example.extree.TreeFragment;
 import com.example.extree.Util;
@@ -191,7 +184,7 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (binaryExpressionTree != null) {
-            int treeHeight = binaryExpressionTree.Height();
+            int treeHeight = binaryExpressionTree.getHeight();
             int maxLeafCount = (int) Math.pow(2, treeHeight);
             mWidth = mCircleRadius * 2 * maxLeafCount + 2 * xGap * (maxLeafCount + 1);
             mWidth = Math.max(mWidth, minimumViewWidth) * 6;

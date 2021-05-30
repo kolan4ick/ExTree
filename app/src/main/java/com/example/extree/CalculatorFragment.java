@@ -2,34 +2,21 @@ package com.example.extree;
 
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
-import android.graphics.Point;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.method.ScrollingMovementMethod;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.ContextMenu;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.WindowInsets;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.extree.database.CalculatorModel;
 import com.example.extree.tree.BinaryExpressionTree;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,8 +45,6 @@ public class CalculatorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_calculator, container, false);
-        AppCompatButton btnTree = fragmentView.findViewById(R.id.buttonGenerateTree);
-        AppCompatButton btnOne = fragmentView.findViewById(R.id.buttonOne);
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
         if (viewModel.getDataCalculatorResultValue() != null) {
             ((TextView) (fragmentView.findViewById(R.id.textView))).setText(viewModel.getDataCalculatorResultValue());

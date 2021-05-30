@@ -25,7 +25,7 @@ public class BinaryExpressionTree {
     }
 
     /* Method for calculating height of tree graph (how deep is it) */
-    public int Height() {
+    public int getHeight() {
         if (root instanceof ExpressionNumber) return 0;
         else return root.Height();
     }

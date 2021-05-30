@@ -37,7 +37,7 @@
         android:id="@+id/creating_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Створено у 2021 році"
+        android:text="Ствoрено у 2021 році"
         android:textAlignment="center"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"

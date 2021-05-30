@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private ItemViewModel viewModel;
     /* For access and store database */
     private DatabaseHelper dbHelper;
-    private int height;
     private BottomNavigationView bottomNavigationView;
     private final int flags = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -69,10 +68,6 @@ public class MainActivity extends AppCompatActivity {
             viewModel.setDataNavControllerValue(navController);
             NavigationUI.setupWithNavController(bottomNavigationView, navController);
         }
-    }
-
-    public Integer getBottomNavigationViewHeight() {
-        return bottomNavigationView.getHeight();
     }
 
     public void onClickButtonCalculator(View view) {
