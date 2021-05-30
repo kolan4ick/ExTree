@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
@@ -13,8 +14,6 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.extree.tree_draw.AnimEndListener;
 import com.example.extree.tree_draw.BinaryExpressionTreeView;
@@ -76,7 +75,7 @@ public class TreeFragment extends Fragment implements AnimEndListener {
                 intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().SymmetricOrder());
 
                 break;
-            case 3:
+            default:
                 intent.putExtra("result_of_tree_traversal", viewModel.getDataBinaryExpressionTreeValue().PostOrder());
                 break;
         }
@@ -101,7 +100,7 @@ public class TreeFragment extends Fragment implements AnimEndListener {
                     binaryExpressionTreeView.beginPostOrderTraversal();
                 } else showResultOfTreeTraversal(3);
                 break;
-            case R.id.btn_clear:
+            case R.id.btn_stop:
                 if (sharedPreferences.getBoolean("isAnimatedTreeTraversalSettings", true)) {
                     binaryExpressionTreeView.beginClear();
                 }

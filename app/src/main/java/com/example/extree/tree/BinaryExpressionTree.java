@@ -57,9 +57,9 @@ public class BinaryExpressionTree {
 
     /* Method for checking if there is a no better way to create a tree for addition and subtraction */
     private boolean HasNoBetterVariantForAdditionSubtraction(ArrayList<Object> arrayList, int i) {
-        return (!arrayList.get(i - 1).equals(')') && !arrayList.get(i + 1).equals('(')) &&
-                (!arrayList.get(i + 2).equals('*') && !arrayList.get(i + 2).equals('/')) &&
-                (!arrayList.get(i - 2).equals('*') && !arrayList.get(i - 2).equals('/')) &&
+        return (!arrayList.get(i - 1).equals(')') && !arrayList.get(i - 2).equals(')') && !arrayList.get(i + 1).equals('(') && !arrayList.get(i + 2).equals('(')) &&
+                (!arrayList.get(i + 2).equals('*') && (!(arrayList.get(i + 2) instanceof IExpression)) && !arrayList.get(i + 2).equals('/')) &&
+                (!arrayList.get(i - 2).equals('*') && (!(arrayList.get(i - 2) instanceof IExpression)) && !arrayList.get(i - 2).equals('/')) &&
                 (!arrayList.get(i + 2).equals('^') && !arrayList.get(i - 2).equals('^'));
     }
 
@@ -106,16 +106,12 @@ public class BinaryExpressionTree {
             if (!((expr[i] >= 48 && expr[i] <= 57) || expr[i] == '.' || (i > 0 && expr[i] == '-' && expr[i - 1] == '(') || (expr[i] == 'E' || expr[i] == 'e'))) {
                 if (num.length() > 0) {
                     arrayList.add(new ExpressionNumber(Double.parseDouble(num.toString())));
-                    if (arrayList.size() > 2 && arrayList.get(arrayList.size() - 1) instanceof IExpression && arrayList.get(arrayList.size() - 2) instanceof IExpression)
-                        arrayList.add(arrayList.size() - 1, '*');
                 }
                 arrayList.add(expr[i]);
                 if (arrayList.size() > 2 && (arrayList.get(arrayList.size() - 3).equals('(') && arrayList.get(arrayList.size() - 2) instanceof ExpressionNumber && arrayList.get(arrayList.size() - 1).equals(')'))) {
                     arrayList.remove(arrayList.size() - 3);
                     arrayList.remove(arrayList.size() - 1);
                 }
-                if (arrayList.size() > 2 && arrayList.get(arrayList.size() - 1) instanceof IExpression && arrayList.get(arrayList.size() - 2) instanceof IExpression)
-                    arrayList.add(arrayList.size() - 1, '*');
                 num = new StringBuilder();
             } else num.append(expr[i]);
         }
@@ -142,6 +138,15 @@ public class BinaryExpressionTree {
         int i = 0;
         while (arrayList.size() > 1) {
             if (i >= arrayList.size()) i = 0;
+            if (arrayList.get(i) instanceof IExpression && arrayList.get(i - 1).equals('(') && arrayList.get(i + 1).equals(')')) {
+                arrayList.remove(i - 1);
+                arrayList.remove(i);
+                i--;
+            }
+            if (i + 1 < arrayList.size() && arrayList.get(i) instanceof IExpression && arrayList.get(i + 1) instanceof IExpression) {
+                arrayList.add(i + 1, '*');
+                i--;
+            }
             if (arrayList.get(i).equals('^') && HasNoBetterVariantForExponentiation(arrayList, i)) {
                 CreateExpressionNode(arrayList, i);
                 i--;
@@ -161,6 +166,7 @@ public class BinaryExpressionTree {
         return (IExpression) arrayList.get(0);
     }
 
+    /* Count of nodes */
     public int getNodeCount() {
         if (root instanceof ExpressionNumber) return 1;
         return root.Count();

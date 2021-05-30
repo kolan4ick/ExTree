@@ -64,6 +64,5 @@ public class FirstLaunchActivity extends AppCompatActivity {
             "  <li>" +
             "    Отримувати результати обходів." +
             "  </li>" +
-            "  Ви можете знайти інструкції з використання програмою на сторінці About, що знаходиться в меню сторінки Calculator." +
             "</ul>";
 }
