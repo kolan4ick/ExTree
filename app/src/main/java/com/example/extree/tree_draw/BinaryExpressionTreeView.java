@@ -515,17 +515,12 @@ public class BinaryExpressionTreeView extends View implements Animator.AnimatorL
     private int stepLimit;
     private boolean firstLaunch = true;
 
-    public void setmHeightOfMenu(int heightOfMenu) {
-        this.heightOfMenu = heightOfMenu;
-    }
-
     private TreeFragment treeFragment;
 
     public void setTreeFragment(TreeFragment treeFragment) {
         this.treeFragment = treeFragment;
     }
 
-    private int heightOfMenu;
     /* Shared preferences for parameters of tree */
     private final SharedPreferences prefs = getContext().getSharedPreferences("com.example.extree", Context.MODE_PRIVATE);
 }

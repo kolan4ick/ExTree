@@ -58,7 +58,6 @@ public class TreeFragment extends Fragment implements AnimEndListener {
         if (viewModel.getDataCalculatorResultValue() != null) {
             binaryExpressionTreeView = fragmentView.findViewById(R.id.binary_expression_tree_view);
             binaryExpressionTreeView.setBinaryExpressionTree(viewModel.getDataBinaryExpressionTreeValue());
-            binaryExpressionTreeView.setmHeightOfMenu(viewModel.getDataMenuHeightValue());
             binaryExpressionTreeView.setAnimEndListener(this);
             binaryExpressionTreeView.setTreeFragment(this);
         }

@@ -43,7 +43,7 @@ public class HistoryFragment extends Fragment {
     /* Create element of history */
     public AppCompatButton createButton(Integer ID, String result, String expression, Double resultDoulbe) {
         AppCompatButton btn = new AppCompatButton(getContext());
-        btn.setBackgroundDrawable(ContextCompat.getDrawable(this.getContext(), R.drawable.invisible_background_button));
+        btn.setBackgroundDrawable(ContextCompat.getDrawable(this.getContext(), R.drawable.tree_fragment_button));
         btn.setTag("buttonHistory_" + ID.toString());
         btn.setText(result);
         btn.setTextSize(20);

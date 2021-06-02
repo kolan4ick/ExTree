@@ -19,7 +19,7 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/font_size_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
@@ -46,11 +46,11 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/font_size_text_view"
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/circle_radius_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
@@ -76,11 +76,11 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/circle_radius_text_view"
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/top_and_bottom_offset_view"
+            android:id="@+id/top_and_bottom_offset_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
@@ -106,7 +106,7 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_and_bottom_offset_view"
+            app:layout_constraintTop_toBottomOf="@+id/top_and_bottom_offset_text_view"
             tools:ignore="MissingConstraints" />
 
         <TextView

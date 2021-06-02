@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/modal_text_color"
-            android:background="@drawable/invisible_background_button"
+            android:background="@drawable/tree_fragment_button"
             android:onClick="onClickButtonTree"
             android:text="Префіксний обхід"
             android:textSize="9sp" />
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:textColor="@color/modal_text_color"
-            android:background="@drawable/invisible_background_button"
+            android:background="@drawable/tree_fragment_button"
             android:onClick="onClickButtonTree"
             android:text="Симетричний обхід"
             android:textSize="9sp" />
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/invisible_background_button"
+            android:background="@drawable/tree_fragment_button"
             android:onClick="onClickButtonTree"
             android:text="Постфіксний обхід"
             android:textColor="@color/modal_text_color"
@@ -59,10 +59,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/invisible_background_button"
+            android:background="@drawable/tree_fragment_button"
             android:onClick="onClickButtonTree"
             android:textColor="@color/modal_text_color"
-            android:text="Очистити"
+            android:text="Зупинити"
             android:textSize="9sp" />
 
     </LinearLayout>
